@@ -1,0 +1,73 @@
+%!TEX TS-program = xelatex
+%!TEX options = -aux-directory=Debug -shell-escape -file-line-error -interaction=nonstopmode -halt-on-error -synctex=1 "%DOC%"
+\documentclass{standalone}
+
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+\setmathfont{TeX Gyre Pagella Math}[range={bb,bbit}, Scale=MatchUppercase]
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,decorations.pathreplacing,calligraphy}
+
+\begin{document}
+\begin{tikzpicture}
+    \node [
+        draw,
+        fill=SeaGreen,
+        text width=2cm,
+        inner sep=0.3cm,
+        align=center,
+        minimum height=1.2cm
+    ] (sp1) {Signal\\ Processing};
+    \node [
+        draw,
+        fill=SeaGreen,
+        text width=2cm,
+        minimum height=1.2cm,
+        inner sep=0.3cm,
+        align=center,
+        right=1cm of sp1
+    ] (cc1) {Carrier\\ Circuit};
+    \node [
+        draw,
+        fill=OrangeRed,
+        text width=2.5cm,
+        minimum height=1.2cm,
+        inner sep=0.3cm,
+        align=center,
+        right=2cm of cc1
+    ] (tm) {Transmission\\ Medium\\ (Channel)};
+    \node [
+        draw,
+        fill=SkyBlue,
+        text width=2cm,
+        minimum height=1.2cm,
+        inner sep=0.3cm,
+        align=center,
+        right=2cm of tm
+    ] (cc2) {Carrier\\ Circuit};
+    \node [
+        draw,
+        fill=SkyBlue,
+        text width=2cm,
+        minimum height=1.2cm,
+        inner sep=0.3cm,
+        align=center,
+        right=1cm of cc2
+    ] (sp2) {Signal\\ Processing};
+    %
+    \draw[<-] (sp1.west) -- ++ (-3, 0) node[at end, anchor=west, below right, label={[at end, above right, align=left]Information\\ Input}] {\(m\left( t \right)\)};
+    \draw[->] (sp1.east) -- (cc1.west);
+    %
+    \draw[->] (cc1.east) -- (tm.west) node[midway, below] {\(s\left( t \right)\)};
+    \draw[<-] (tm.north) -- ++ (0, 1.5) node[at end, anchor=south, above, text width=1cm, align=center] {Noise\\\(n\left( t \right)\)};
+    \draw[->] (tm.east) -- (cc2.west) node[midway, below] {\(r\left( t \right)\)};
+    %
+    \draw[->] (cc2.east) -- (sp2.west);
+    \draw[->] (sp2.east) -- ++ (3, 0) node[at end, anchor=east, below left, label={[at end, above left, align=right]Information\\ Output}] {\(\hat{m}\left( t \right)\)};
+    %
+    \draw[decorate,decoration={calligraphic brace,mirror,amplitude=0.3cm,raise=0.2cm},line width=0.03cm] (sp1.south west) -- (cc1.south east) node[midway, below=0.5cm] {Transmitter};
+    \draw[decorate,decoration={calligraphic brace,mirror,amplitude=0.3cm,raise=0.2cm},line width=0.03cm] (cc2.south west) -- (sp2.south east) node[midway, below=0.5cm] {Receiver};
+\end{tikzpicture}
+\end{document}
