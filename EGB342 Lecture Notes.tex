@@ -5,6 +5,7 @@
 
 % Additional packages & macros
 \DeclareMathOperator{\sgn}{sgn}
+\usepackage{makecell}
 
 % Header and footer
 \newcommand{\unitName}{Telecommunications and RF}
@@ -331,4 +332,215 @@ This gives the output
     \hat{m}\left( t \right) = \frac{1}{2} A_c \left[ m\left( t \right) \cos{\left( \phi \right)} \mp \hat{m}\left( t \right) \sin{\left( \phi \right)} \right]
 \end{equation*}
 Note the \(\hat{m}\left( t \right)\) term on the right hand side of the equation is referring to the Hilbert transform of \(m\left( t \right)\), not the output of the demodulator.
+\section{Angle Modulation}
+AM suffers from poor noise performance, as amplitude variations in the received signal
+cannot be removed from the demodulated signal.
+Angle modulation schemes overcome this issue by modulating the phase or frequency of the carrier signal.
+\subsection{Carrier Signal}
+In these schemes, the message signal is modulated onto the angle \(\theta\left( t \right)\) of
+the carrier signal:
+\begin{gather*}
+    s\left( t \right) = A_c \cos{\left( \theta\left( t \right) \right)} \\
+    \theta\left( t \right) = 2\pi f_c t + \phi\left( t \right)
+\end{gather*}
+In \textbf{phase modulation} (PM), variations in the message signal are encoded into the phase:
+\begin{equation*}
+    \phi\left( t \right) = k_p m\left( t \right)
+\end{equation*}
+where \(k_p\) is the \textbf{phase deviation} constant.
+
+\textbf{Frequency modulation} (FM) considers the frequency deviation from the modulation frequency \(f_c\):
+\begin{equation*}
+    f_i - f_c = k_f m\left( t \right)
+\end{equation*}
+where \(f_i\) is the instantaneous frequency of the carrier signal and \(k_f\) is the \textbf{frequency deviation} constant.
+To determine the phase \(\phi\), consider the time derivative of the angle \(\theta\left( t \right)\) with arbitrary frequency \(f\)
+\begin{align*}
+    \odv{\theta\left( t \right)}{t} & = \odv*{\left( 2\pi f t + \phi \right)}{t}                        \\
+    \odv{\theta\left( t \right)}{t} & = 2\pi f_i                                                        \\
+    \theta\left( t \right)          & = 2\pi \int_0^t f_i \odif{\tau}                                   \\
+    \theta\left( t \right)          & = 2\pi \int_0^t f_c + k_f m\left( \tau \right) \odif{\tau}        \\
+    \theta\left( t \right)          & = 2\pi f_c t + 2\pi k_f \int_0^t m\left( \tau \right) \odif{\tau}
+\end{align*}
+\subsubsection{Phase Modulation}
+A phase modulated signal is defined as:
+\begin{equation*}
+    s\left( t \right) = A_c \cos{\left( 2\pi f_c t + k_p m\left( t \right) \right)}
+\end{equation*}
+with
+\begin{equation*}
+    \theta\left( t \right) = 2\pi f_c t + k_p m\left( t \right)
+\end{equation*}
+where \(k_p\) is the \textbf{phase deviation} constant.
+\subsubsection{Frequency Modulation}
+A frequency modulated signal is defined as:
+\begin{equation*}
+    s\left( t \right) = A_c \cos{\left( 2\pi f_c t + 2\pi k_f \int_0^t m\left( \tau \right) \odif{\tau} \right)}
+\end{equation*}
+with
+\begin{equation*}
+    \theta\left( t \right) = 2\pi f_c t + 2\pi k_f \int_0^t m\left( \tau \right) \odif{\tau}
+\end{equation*}
+where \(k_f\) is the \textbf{frequency deviation} constant.
+\subsubsection{Instantaneous Frequency}
+The instantaneous frequency \(f_i\) may be determined from these signals by considering the time derivative of \(\theta\).
+
+In PM,
+\begin{align*}
+    \odv{\theta}{t} & = 2\pi f_c + k_p \odv*{m\left( t \right)}{t}                                                                                               \\
+                    & = 2\pi \left( f_c + \frac{k_p}{2\pi} \odv*{m\left( t \right)}{t} \right) \implies f_i = f_c + \frac{k_p}{2\pi} \odv*{m\left( t \right)}{t}
+\end{align*}
+In FM,
+\begin{align*}
+    \odv{\theta}{t} & = 2\pi f_c + 2\pi k_f m\left( t \right)                                                      \\
+                    & = 2\pi \left( f_c + k_f m\left( t \right) \right) \implies f_i = f_c + k_f m\left( t \right)
+\end{align*}
+\subsubsection{Modulation Index}
+The modulation index \(\beta\) is defined as the ratio of the maximum frequency deviation to the modulating frequency of the message signal.
+In PM, if we rewrite the phase \(\phi\left( t \right)\) as,
+\begin{align*}
+    \phi\left( t \right) & = k_p \max{\abs*{m\left( t \right)}} \frac{m\left( t \right)}{\max{\abs*{m\left( t \right)}}} \\
+                         & = \beta_p m_n\left( t \right)
+\end{align*}
+then \(\beta_p\) is the modulation index for PM.
+By definition, FM has a modulation index of \(\beta_f = \frac{k_f \max{\abs*{m\left( t \right)}}}{B}\)
+where \(B\) is the bandwidth of the message signal.
+\subsubsection{Maximum Phase and Frequency Deviation}
+The maximum phase deviation \(\Delta p\) and maximum frequency deviation \(\Delta f\) are defined as:
+\begin{equation*}
+    \Delta p = k_p \max{\abs*{m\left( t \right)}} \qquad \Delta f = k_f \max{\abs*{m\left( t \right)}}
+\end{equation*}
+\subsubsection{Carson's Rule}
+Phase and frequency modulation generally expand the bandwidth of a signal.
+The modulated signals bandwidth \(W\) may be approximated by Carson's rule:
+\begin{equation*}
+    W = 2B \left( \beta + 1 \right)
+\end{equation*}
+\subsubsection{Summary of Angle Modulation Definitions}
+% \begin{noindent}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lcc}
+        \toprule
+                                                                                  & \textbf{Phase Modulation}                                                     & \textbf{Frequency Modulation}                                                                              \\
+        \midrule
+        \makecell[l]{\textbf{Modulated} \\ \textbf{Signal} \(s\left( t \right)\)} & \(\displaystyle A_c \cos{\left( 2\pi f_c t + k_p m\left( t \right) \right)}\) & \(\displaystyle A_c \cos{\left( 2\pi f_c t + 2\pi k_f \int_0^t m\left( \tau \right) \odif{\tau} \right)}\) \\[1em]
+        \textbf{Phase} \(\phi\left( t \right)\)                                   & \(\displaystyle k_p m\left( t \right)\)                                       & \(\displaystyle 2\pi k_f \int_0^t m\left( \tau \right) \odif{\tau}\)                                       \\[1em]
+        \makecell[l]{\textbf{Instantaneous} \\ \textbf{Frequency} \(f_i\)}        & \(\displaystyle f_c + \frac{k_p}{2\pi} \odv*{m\left( t \right)}{t}\)          & \(\displaystyle f_c + k_f m\left( t \right)\)                                                              \\[1em]
+        \makecell[l]{\textbf{Modulation} \\ \textbf{Index}}                       & \(\displaystyle \beta_p = k_p \max{\abs*{m\left( t \right)}}\)                & \(\displaystyle \beta_f = \frac{k_f \max{\abs*{m\left( t \right)}}}{B}\)                                   \\[1em]
+        \makecell[l]{\textbf{Maximum} \\ \textbf{Deviation}}                      & \(\displaystyle \Delta p = k_p \max{\abs*{m\left( t \right)}}\)               & \(\displaystyle \Delta f = k_f \max{\abs*{m\left( t \right)}}\)                                            \\[1em]
+        \bottomrule
+    \end{tabular}
+    % \caption{} % \label{}
+\end{table}
+% \end{noindent}
+\subsection{Narrowband Angle Modulation}
+When \(\beta \ll 1\), angle modulation is referred to as narrowband angle modulation.
+The modulated signal can be approximated as:
+\begin{align*}
+    s\left( t \right) & = A_c \cos{\left( 2 \pi f_c t + \phi\left( t \right) \right)}                                                                                                     \\
+                      & = A_c \cos{\left( 2 \pi f_c t \right)} \cos{\left( \phi\left( t \right) \right)} - A_c \sin{\left( 2 \pi f_c t \right)} \sin{\left( \phi\left( t \right) \right)} \\
+                      & = A_c \cos{\left( 2 \pi f_c t \right)} - A_c \phi\left( t \right) \sin{\left( 2 \pi f_c t \right)}
+\end{align*}
+This is equivalent to a DSB-FC signal with a phase modulated carrier, as the message signal is now modulated onto a sine carrier instead of cosine.
+The modulated signal bandwidth \(W\) is approximately \(2B\).
+
+Narrowband angle modulation (low-index angle modulation) does not provide better noise immunity than AM, and is
+seldom used on its own in practical communication systems.
+\subsection{Wideband Angle Modulation}
+Assuming the message signal is a sinusoidal signal, \(\phi\left( t \right) = \beta \sin{\left( 2 \pi f_m t \right)}\),
+\begin{align*}
+    s\left( t \right) & = A_c \cos{\left( 2 \pi f_c t + \beta \sin{\left( 2 \pi f_m t \right)} \right)}                                                                                                                       \\
+                      & = A_c \cos{\left( 2 \pi f_c t \right)} \cos{\left( \beta \sin{\left( 2 \pi f_m t \right)} \right)} - A_c \sin{\left( 2 \pi f_c t \right)} \sin{\left( \beta \sin{\left( 2 \pi f_m t \right)} \right)}
+\end{align*}
+To simplify this expression, we can use Bessel functions. Notably
+\begin{align*}
+    \cos{\left( \beta \sin{\left( 2 \pi f_m t \right)} \right)} & = J_0\left( \beta \right) + 2 \sum_{n=1}^{\infty} J_{2n}\left( \beta \right) \cos{\left( 2 \pi \left( 2n \right) f_m t \right)} \\
+    \sin{\left( \beta \sin{\left( 2 \pi f_m t \right)} \right)} & = 2 \sum_{n=1}^{\infty} J_{2n-1}\left( \beta \right) \sin{\left( 2 \pi \left( 2n-1 \right) f_m t \right)}
+\end{align*}
+where \(J_n\left( \beta \right)\) are Bessel functions of the first kind and order \(n\), evaluated at \(\beta\).
+
+These results can be used to show that a wideband FM modulated signal can be expressed as:
+\begin{equation*}
+    s\left( t \right) = \sum_{n = -\infty}^\infty A_c J_n\left( \beta \right) \cos{\left( 2 \pi \left( f_c + n f_m \right) t \right)}
+\end{equation*}
+so that the carrier frequency is located at \(2 \pi f_c\) with magnitude \(A_c J_0\left( \beta \right)\), with an
+infinite number of sidebands at \(2 \pi \left( f_c \pm n fm \right)\) with magnitudes \(A_c J_{\pm n}\left( \beta \right)\).
+
+When deciding the number of sidebands \(n\) to include, consider
+\begin{equation*}
+    \abs*{J_{\pm n}\left( \beta \right)} \geqslant 0.1
+\end{equation*}
+For large values of \(\beta\), \(n \approx \beta\) is sufficient.
+
+According to Carson's rule, \(W = 2 f_m \left( \beta + 1 \right)\) contains at least \(98\%\) of the signal power.
+\subsubsection{Bessel Function Properties}
+The Bessel functions of the first kind \(J_n\left( x \right)\) are defined as the solutions to the Bessel differential equation
+\begin{equation*}
+    x^2 \odv[order=2]{y}{x} + x \odv{y}{x} + \left( x^2 - n^2 \right) y = 0
+\end{equation*}
+\begin{itemize}
+    \item \(J_n\left( \beta \right)\) is a real function
+    \item \(J_n\left( \beta \right) = J_{-n}\left( \beta \right)\)
+    \item \(\sum_{n = -\infty}^\infty J_n^2\left( \beta \right) = 1\)
+\end{itemize}
+For small values of \(\beta\),
+\begin{itemize}
+    \item \(J_0\left( \beta \right) = 1\)
+    \item \(J_1\left( \beta \right) = \beta/2\)
+    \item \(J_n\left( \beta \right) = 0\) for \(n > 2\)
+\end{itemize}
+\subsection{Effect of Bandwidth}
+Rewriting Carson's rule using \(\beta\),
+\begin{equation*}
+    W = 2B \left( \beta + 1 \right) =
+    \begin{cases}
+        2B \left( k_p \max{\abs*{m\left( t \right)}} + 1 \right) & \text{PM} \\
+        2 \left( k_f \max{\abs*{m\left( t \right)}} + B \right) & \text{FM}
+    \end{cases}
+\end{equation*}
+From these equations
+\begin{itemize}
+    \item Increasing the amplitude of the modulating signal has the same effect in both PM and FM.
+    \item Increase the message signal bandwidth \(B\) has a greater effect on the bandwidth of a PM signal than for FM.
+\end{itemize}
+\subsection{Angle Modulator Implementation}
+FM can be generated using a Voltage Controlled Oscillator (VCO). A varactor diode is a capacitor whose capacitance changes
+with applied voltage. This capacitor can be used in the tuned circuit of an oscillator.
+If the message signal is applied to the varactor, the output frequency of the oscillator will change in accordance
+with the message signal.
+
+The time varying capacitance of the varactor diode is given by
+\begin{equation*}
+    C_v\left( t \right) = C_a + k_0 m\left( t \right)
+\end{equation*}
+\begin{itemize}
+    \item When \(m\left( t \right) = 0\), the frequency of the tuned circuit is given by
+    \begin{equation*}
+        f_i = f_c = \frac{1}{2 \pi \sqrt{L C_a}}
+    \end{equation*}
+    \item When \(m\left( t \right) \neq 0\), the frequency of the tuned circuit is given by
+    \begin{equation*}
+        f_i = \frac{1}{2 \pi \sqrt{L \left( C_a + k_0 m\left( t \right) \right)}} = \frac{1}{2 \pi \sqrt{L C_a \left( 1 + k_0 m\left( t \right) / C_a \right)}} = f_c \frac{1}{\sqrt{1 + k_0 m\left( t \right) / C_a}}
+    \end{equation*}
+\end{itemize}
+Narrowband FM can be converted to wideband using a narrowband-to-wideband convertor by multiplying the frequencies of the narrowhand signal.
+\subsection{Demodulating Angle Modulated Signals}
+FM demodulators are implemented by generating an AM signal whose amplitude is proportional to the instantaneous frequency of the
+FM signal. We can then use an AM demodulator to recover the message signal.
+
+In such a circuit, the LTI system is a differentiator whose frequency response is approximately a straight
+line in the frequency band of the FM signal. \(\abs*{H} = 2 \pi f\).
+\subsection{AM vs. FM}
+\begin{itemize}
+    \item FM capture effect: When two FM signals are received, the stronger signal is demodulated and the weaker signal is ignored.
+    \begin{itemize}
+        \item The complete suppression of the weaker signal occurs at the receiver limited, where it is treated as noise and rejected.
+        \item When both signals are of equal strength, the receiver may switch between the two signals.
+    \end{itemize}
+    \item FM requires a higher bandwidth \(W_{\mathrm{AM}} < W_{\mathrm{FM}}\).
+    \item FM rejects amplitude noise cause by lightning and other man-made noise.
+    \item AM demodulators: envelope detector, product detector.
+    \item FM demodulators: PLL, ratio detector, frequency discriminator, slope detector.
+\end{itemize}
 \end{document}
