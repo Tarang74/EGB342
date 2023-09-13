@@ -951,26 +951,26 @@ By performing integration with \(s_j\), we obtain
     \end{cases}
     \\
                         & =
-                            \begin{cases}
-                                E_j + \hat{n}\left( t \right)                                                                        & j = i    \\
-                                \displaystyle\int_0^{T_s} s_i\left( t \right) s_j\left( t \right) \odif{t} + \hat{n}\left( t \right) & j \neq i
-                            \end{cases}
+    \begin{cases}
+        E_j + \hat{n}\left( t \right)                                                                        & j = i    \\
+        \displaystyle\int_0^{T_s} s_i\left( t \right) s_j\left( t \right) \odif{t} + \hat{n}\left( t \right) & j \neq i
+    \end{cases}
 \end{align*}
 where \(\hat{n}\left( t \right)\) is also a Gaussian random process.
 \begin{itemize}
-    \item When the correlator is matched to the
-          transmitted symbol, the output is distributed about the
-          autocorrelation of the transmitted symbol.
+    \item When the correlator is matched to the transmitted symbol, the
+          output is distributed about the autocorrelation of the
+          transmitted symbol.
     \item When the correlator is matched to the wrong symbol, the
-          output is distributed about the cross-correlation
-          of the transmitted and reference symbol.
+          output is distributed about the cross-correlation of the
+          transmitted and reference symbol.
 \end{itemize}
 Using the test statistic \(r\), we can then make a decision regarding
 the transmitted symbol, by comparing \(r\) with a particular threshold.
 \subsection{Matched Filter}
-The filter corresponding to the corellator is called the matched filter.
-The matched filter is a linear filter that maximises the SNR at a
-particular sampling time (typically at the end of the bit period).
+The filter corresponding to the corellator is called the matched
+filter. The matched filter is a linear filter that maximises the SNR at
+a particular sampling time (typically at the end of the bit period).
 \begin{equation*}
     \left( \frac{S}{N} \right) = \frac{\abs*{x\left( t_0 \right)}^2}{\mathrm{E}\left[ N_0^2\left( t \right) \right]}
 \end{equation*}
@@ -985,8 +985,8 @@ Fourier transform of the signal, \(S_N\left( \omega \right)\) is the
 power spectral density of the noise, and \(C\) is an arbitrary real
 constant.
 
-As the noise is assumed to be AWGN, \(S_N\left( \omega \right) = N_0/2\).
-The impulse response then becomes
+As the noise is assumed to be AWGN, \(S_N\left( \omega \right) =
+N_0/2\). The impulse response then becomes
 \begin{equation*}
     h_{\mathrm{opt}}\left( t \right) = K x^\ast\left( t_0 - t \right)
 \end{equation*}
@@ -994,7 +994,8 @@ where \(K\) is a constant, and \(x^\ast\left( t \right)\) is the
 complex conjugate of the signal.
 
 For a symbol shape \(s_i\left( t \right)\), this tells us that the
-impulse response of the matched filter is \(s_i\left( T_s - t \right)\).
+impulse response of the matched filter is \(s_i\left( T_s - t
+\right)\).
 \subsubsection{Error Performance}
 The bit error rate is given by the ratio of the number of bit errors to
 the total number of bits transmitted. The theoretical bit error rate is
@@ -1008,4 +1009,140 @@ symbols,
 \begin{equation*}
     d_{\mathrm{01}}^2 = \int_0^{T_b} \left( s_0 - s_1 \right)^2 \odif{t}
 \end{equation*}
+\section{Information Theory}
+Information is a measure of the uncertainty of an event.
+\begin{itemize}
+    \item An event that is 100\% probably is unsurprising and yields no
+          information.
+    \item A less probable event is more surprising and therefore yields
+          more information.
+\end{itemize}
+The study of information theory therefore applies to random events.
+\begin{definition}[Alphabet]
+    An alphabet \(\mathcal{A}\) is a finite set of \(M\) symbols
+    \(\left\{ a_1,\: a_2,\: \dots,\: a_M \right\}\) used to represent
+    information from a source.
+    For a source \(\left\{ X_n \right\}_{n=-\infty}^{\infty}\),
+    the alphabet \(\mathcal{X} = \left\{ x_1,\: x_2,\: \ldots,\: x_M \right\}\)
+    represents the set of all possible values that \(X_n\) can take.
+\end{definition}
+\begin{definition}[Probability of a symbol]
+    The probability of a symbol \(x \in \mathcal{X}\) is the
+    probability that the random variable \(X\) takes the value \(x\):
+    \begin{equation*}
+        p\left( x \right) = \Pr{\left( X = x \right)}.
+    \end{equation*}
+    When all \(M\) symbols in this alphabet are equiprobable,
+    \(p\left( x \right) = 1/M\) for all \(x \in \mathcal{X}\).
+\end{definition}
+\subsection{Measure of Information}
+The informational content associated with a symbol \(x\) is inversely
+proportional to the probability of the occurrence of that symbol:
+\begin{equation*}
+    I\left( x \right) = \log_2{\left( \frac{1}{p\left( x \right)} \right)} = -\log_2{\left( p\left( x \right) \right)}.
+\end{equation*}
+This suggests that an event with low probability carries more information.
+\begin{definition}[Entropy]
+    The entropy of a discrete random variable \(X\) is the average
+    information carried by each symbol:
+    \begin{equation*}
+        H\left( X \right) = \mathrm{E}\left[ I\left( x \right) \right] = \mathrm{E}\left[ - \log{\left( p\left( X \right) \right)} \right] = -\sum_{i=1}^{M} p\left( x_i \right) \log_2{\left( p\left( x_i \right) \right)}.
+    \end{equation*}
+    The entropy of a source \(\left\{ X_n \right\}_{n=-\infty}^{\infty}\)
+    reflects the average amount of uncertainty that is resolved by using
+    the alphabet.
+\end{definition}
+For a binary source, entropy is measured in bits per symbol (\unit{bit/symbol}).
+The bit rate \(R_b\) is given by the product of the entropy
+\(H\left( X \right)\) and the symbol rate \(R_s\):
+\begin{align*}
+    R_b          & = H\left( X \right) R_s                    \\
+    \unit{bit/s} & = \unit{bit/symbol} \times \unit{symbol/s}
+\end{align*}
+\subsection{Multiple Sources of Information}
+Given two discrete random variables \(X\) and \(Y\) with alphabets
+\(\mathcal{X}\) and \(\mathcal{Y}\), the joint probability of \(x \in
+\mathcal{X}\) and \(y \in \mathcal{Y}\) is given by
+\begin{equation*}
+    p\left( x,\: y \right) = \Pr{\left( X = x \cap Y = y \right)}.
+\end{equation*}
+
+When \(X\) and \(Y\) are independent, the joint probability is given by
+the product of the individual (marginal) probabilities:
+\begin{equation*}
+    p\left( x,\: y \right) = p\left( x \right) p\left( y \right).
+\end{equation*}
+The conditional probability of \(x\) given \(y\) is given by
+\begin{equation*}
+    p\left( x \mid y \right) = \frac{p\left( x,\: y \right)}{p\left( y \right)} \implies p\left( x,\: y \right) = p\left( x \mid y \right) p\left( y \right)
+\end{equation*}
+and the conditional probability of \(y\) given \(x\) is given by
+\begin{equation*}
+    p\left( y \mid x \right) = \frac{p\left( x,\: y \right)}{p\left( x \right)} \implies p\left( x,\: y \right) = p\left( y \mid x \right) p\left( x \right).
+\end{equation*}
+\subsubsection{Joint Entropy}
+The joint entropy of \(X\) and \(Y\) is given by
+\begin{equation*}
+    H\left( X,\: Y \right) = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x,\: y \right) \log_2{\left( p\left( x,\: y \right) \right)}.
+\end{equation*}
+Joint entropy measures the amount of uncertainty associated with the
+joint distribution of \(X\) and \(Y\).
+\begin{theorem}[Chain Rule for Entropy]
+    The above result can be expressed as
+    \begin{equation*}
+        H\left( X,\: Y \right) = H\left( X \right) + H\left( Y \mid X \right) = H\left( Y \right) + H\left( X \mid Y \right).
+    \end{equation*}
+    This is known as the chain rule for entropy.
+\end{theorem}
+\begin{proof}
+    We can prove this result by expanding the joint entropy:
+    \begin{align*}
+        H\left( X,\: Y \right) & = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x,\: y \right) \log_2{\left( p\left( x,\: y \right) \right)}                                                                                                                                                               \\
+                               & = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x,\: y \right) \log_2{\left( p\left( x \right) p\left( y \mid x \right) \right)}                                                                                                                                           \\
+                               & = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x,\: y \right) \left[ \log_2{\left( p\left( x \right) \right)} + \log_2{\left( p\left( y \mid x \right) \right)} \right]                                                                                                   \\
+                               & = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x,\: y \right) \log_2{\left( p\left( x \right) \right)} - \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x,\: y \right) \log_2{\left( p\left( y \mid x \right) \right)}                                         \\
+                               & = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x \right) p\left( y \mid x \right) \log_2{\left( p\left( x \right) \right)} - \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x \right) p\left( y \mid x \right) \log_2{\left( p\left( y \mid x \right) \right)} \\
+                               & = -\sum_{x \in \mathcal{X}} p\left( x \right) \log_2{\left( p\left( x \right) \right)} \sum_{y \in \mathcal{Y}} p\left( y \mid x \right) - \sum_{x \in \mathcal{X}} p\left( x \right) \sum_{y \in \mathcal{Y}} p\left( y \mid x \right) \log_2{\left( p\left( y \mid x \right) \right)} \\
+                               & = H\left( X \right) + \sum_{x \in \mathcal{X}} p\left( x \right) H\left( Y \mid X \right)                                                                                                                                                                                               \\
+                               & = H\left( X \right) + \mathrm{E}_X\left[ H\left( Y \mid X \right) \right]                                                                                                                                                                                                               \\
+                               & = H\left( X \right) + H\left( Y \mid X \right)
+    \end{align*}
+    A similar proof can be used to show that \(H\left( X,\: Y \right) = H\left( Y \right) + H\left( X \mid Y \right)\).
+\end{proof}
+\subsection{Conditional Entropy}
+The conditional entropy of \(Y\) given \(X\) is given by
+\begin{equation*}
+    H\left( Y \mid X \right) = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x,\: y \right) \log_2{\left( p\left( y \mid x \right) \right)}.
+\end{equation*}
+Conditional entropy measures the amount of information needed to
+describe the uncertainty of \(Y\) given \(X = x\).
+\begin{proof}
+    As \(H\left( Y \mid X \right)\) is a function of \(Y\), we can
+    write
+    \begin{equation*}
+        H\left( Y \mid X \right) = \sum_{x \in \mathcal{X}} p\left( y \mid x \right) \log_2{\left( p\left( y \mid x \right) \right)}.
+    \end{equation*}
+    Additionally, the expected value of \(H\left( Y \mid X \right)\)
+    with respect to \(X\) is given by
+    \begin{equation*}
+        \mathrm{E}_X\left[ H\left( Y \mid X \right) \right] = \sum_{x \in \mathcal{X}} p\left( x \right) H\left( Y \mid X \right).
+    \end{equation*}
+    which is equivalent to the definition of \(H\left( Y \mid X \right)\).
+    Therefore, by combining the two equations, we obtain
+    \begin{align*}
+        H\left( Y \mid X \right) & = \mathrm{E}_X\left[ H\left( Y \mid X \right) \right]                                                                                           \\
+                                 & = \sum_{x \in \mathcal{X}} p\left( x \right) H\left( Y \mid X \right)                                                                           \\
+                                 & = -\sum_{x \in \mathcal{X}} p\left( x \right) \sum_{y \in \mathcal{Y}} p\left( y \mid x \right) \log_2{\left( p\left( y \mid x \right) \right)} \\
+                                 & = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x \right) p\left( y \mid x \right) \log_2{\left( p\left( y \mid x \right) \right)} \\
+                                 & = -\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x,\: y \right) \log_2{\left( p\left( y \mid x \right) \right)}
+    \end{align*}
+\end{proof}
+\subsection{Mutual Information}
+The mutual information between \(X\) and \(Y\) is given by
+\begin{equation*}
+    I\left( X,\: Y \right) = H\left( X \right) - H\left( X \mid Y \right) = H\left( Y \right) - H\left( Y \mid X \right).
+\end{equation*}
+Mutual information measures the amount of information that \(X\) and
+\(Y\) share. It is also the reduction in uncertainty of \(X\) when \(Y\)
+is known, or the reduction in uncertainty of \(Y\) when \(X\) is known.
 \end{document}
