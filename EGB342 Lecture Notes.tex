@@ -1139,10 +1139,124 @@ describe the uncertainty of \(Y\) given \(X = x\).
 \end{proof}
 \subsection{Mutual Information}
 The mutual information between \(X\) and \(Y\) is given by
-\begin{equation*}
-    I\left( X,\: Y \right) = H\left( X \right) - H\left( X \mid Y \right) = H\left( Y \right) - H\left( Y \mid X \right).
-\end{equation*}
+\begin{align*}
+    I\left( X,\: Y \right) & = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p\left( x,\: y \right) \log_2{\left( \frac{p\left( x,\: y \right)}{p\left( x \right) p\left( y \right)} \right)} \\
+                           & = H\left( X \right) - H\left( X \mid Y \right)                                                                                                                       \\
+                           & = H\left( Y \right) - H\left( Y \mid X \right)
+\end{align*}
 Mutual information measures the amount of information that \(X\) and
 \(Y\) share. It is also the reduction in uncertainty of \(X\) when \(Y\)
 is known, or the reduction in uncertainty of \(Y\) when \(X\) is known.
+\section{Source Coding}
+Given a source \(X\) with \(n\) symbols, the minimum number of bits per
+symbol required to transmit the source is given by the entropy
+\(H\left( X \right)\).
+\subsection{Source Coding Theorem}
+Given a source \(X\), let \(C : \mathcal{X} \to \mathcal{A}\) be any
+coding function that maps the source alphabet \(\mathcal{X} = \left\{
+x_1,\: x_2,\: \dots,\: x_M \right\}\) to the set of sequences
+\(\mathcal{A} = \left\{ a_1,\: a_2,\: \dots,\: a_M \right\}\), i.e.,
+\begin{equation*}
+    C\left( x_i \right) = a_i.
+\end{equation*}
+Then, the smallest possible expected code word length
+\(L = \abs*{C\left( X \right)}\) is the entropy of \(X\).
+\begin{equation*}
+    \mathrm{E}\left[ L \right] = \sum_{x = 1}^M L_i p_i \geqslant H\left( X \right).
+\end{equation*}
+For a sequence of \(n\) symbols, the expected code word length is at
+least \(n H\left( X \right)\).
+
+Therefore, for \textbf{lossless encoding}, a source with entropy
+\(H\left( X \right)\) can be encoded with an arbitrarily small error
+probability at a rate \(R\) bits per symbol, as long as
+\begin{equation*}
+    R > H\left( X \right).
+\end{equation*}
+When all symbols in the source alphabet are equiprobable, the entropy
+is maximised, and the minimum number of bits per symbol is
+\begin{equation*}
+    R > \log_2{\left( M \right)}.
+\end{equation*}
+This is used in Pulse Code Modulation (PCM).
+\subsection{Designing a Code}
+When designing the optimal code \(C\), the following criteria must be
+satisfied:
+\begin{enumerate}
+    \item \textbf{Uniqueness}: each code word must be uniquely
+          decodable, i.e., there must be no ambiguity in decoding a
+          code word from a binary sequence.
+    \item \textbf{Instantaneous}: each code word must be recognisable
+          without the need to look ahead at the next code word in the
+          sequence.
+    \item \textbf{Prefix}: no code word can be a prefix of another code
+          word.
+\end{enumerate}
+Additionally, the code must be \textbf{efficient}, i.e., the average
+code word length \(\mathrm{E}\left[ L \right]\), must be minimised
+(close to the entropy of the source). The efficiency of a code is given
+by
+\begin{equation*}
+    \eta = \frac{H\left( X \right)}{\mathrm{E}\left[ L \right]} = \frac{H\left( X \right)}{\sum_{i=1}^{M} L_i p_i}.
+\end{equation*}
+\subsection{Shannon-Fano Coding}
+The Shannon-Fano coding algorithm is an algorithm that constructs a
+prefix code by recursively splitting the source alphabet into two sets,
+such that the entropy of each set is almost equal.
+
+The steps for the algorithm are as follows:
+\begin{enumerate}
+    \item Order the source alphabet \(\mathcal{X} = \left\{ x_1,\:
+          x_2,\: \dots,\: x_M \right\}\) in descending order of
+          probability.
+    \item Split the alphabet into two sets \(A\) and \(B\) such that
+          \begin{equation*}
+              \sum_{x \in A} p\left( x \right) \approx \sum_{x \in B} p\left( x \right).
+          \end{equation*}
+    \item Assign a 0 to all symbols in set \(A\) and a 1 to all symbols
+    \item Repeat steps 2 and 3 for each set until each set contains
+          only one symbol.
+    \item The code word for each symbol \(x_i\) is the sequence of 0s
+          and 1s assigned to that symbol.
+\end{enumerate}
+This algorithm does not always generate an optimal code however. Instead,
+we can use the Huffman coding algorithm, which generates codes in reverse,
+i.e., from the leaf to the root.
+\subsection{Huffman Coding}
+The Huffman coding algorithm is an algorithm that constructs a
+prefix-free code by recursively combining the two least probable
+symbols into a single symbol, until only one symbol remains.
+
+The steps for the algorithm are as follows:
+\begin{enumerate}
+    \item Order the source alphabet \(\mathcal{X} = \left\{ x_1,\:
+          x_2,\: \dots,\: x_M \right\}\) in descending order of
+          probability.
+    \item Combine the two least probable symbols \(x_i\) and \(x_j\)
+          into a single symbol \(x_k\), where \(k > j > i\).
+    \item Assign a 0 to \(x_i\) and a 1 to \(x_j\).
+    \item Repeat steps 2 and 3 until only one symbol remains.
+    \item The code word for each symbol \(x_i\) is the sequence of 0s
+          and 1s assigned to that symbol.
+\end{enumerate}
+In this algorithm, step 3 may be performed in multiple ways, for example,
+\begin{itemize}
+    \item \(x_i\) is assigned 1 and \(x_j\) is assigned 0
+    \item \(x_i\) is assigned 0 and \(x_j\) is assigned 1
+    \item the assignment changes at each iteration
+\end{itemize}
+and therefore the Huffman algorithm is not unique. Additionally, when
+the least probable symbol \(x_i\) has a probability \(p_i\), and the next
+least probable symbol \(x_j\) shares a probability \(p_j\) with another
+symbol, the algorithm is ambiguous.
+\subsection{Variance of Code Word Length}
+When two codes share the same average code word length, the code with
+the smaller variance of code length is preferred. The variance of a
+code length is given by
+\begin{equation*}
+    \sigma^2 = \sum_{i=1}^{M} \left( L_i - \mathrm{E}\left[ L \right] \right)^2 p_i.
+\end{equation*}
+A high variance typically indicates that the number of bits per symbol
+is high. Therefore, it is beneficial to minimise the variance of a code
+word length.
 \end{document}
