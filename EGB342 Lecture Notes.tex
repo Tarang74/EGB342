@@ -660,7 +660,7 @@ FM signal. \(\abs*{H} = 2 \pi f\).
     \item FM demodulators: PLL, ratio detector, frequency
           discriminator, slope detector.
 \end{itemize}
-\section{Digital Modulation}
+\section{Digital Baseband Modulation}
 A source encoder converts an analog signal into a sequence of binary
 digits (bits). Digital modulation is used to transmit digital
 information over an additive white Gaussian noise (AWGN) channel.
@@ -1259,4 +1259,542 @@ code length is given by
 A high variance typically indicates that the number of bits per symbol
 is high. Therefore, it is beneficial to minimise the variance of a code
 word length.
+\section{Digital Passband Modulation}
+Similar to the baseband case, we can use digital modulation to transmit
+information over a passband channel. For bandpass modulation, the
+bandwidth of the transmitted signal is in general
+\(B_{\mathrm{Passband}} = 2B_{\mathrm{Baseband}}\). Therefore, in a
+passband channel,
+\begin{itemize}
+    \item \(B = 2 R_s\) for rectangular pulses
+    \item \(B = R_s\) for Nyquist (sinc) pulses
+    \item \(B = R_s \left( 1 + R \right)\) for raised cosine pulses
+\end{itemize}
+A digital signal can be modulated by varying the
+\begin{itemize}
+    \item amplitude
+    \item frequency
+    \item phase
+    \item combination of the above
+\end{itemize}
+of a sinusoidal carrier wave. If the modulating wave consists of NRZ
+pulses, the modulated parameter will be switched or \textbf{keyed}
+from one value to another. This is known as \textbf{keying}. There are
+three types of keying:
+\begin{itemize}
+    \item \textbf{Amplitude Shift Keying (ASK)}: the amplitude of the
+          carrier wave is switched between two values. For example,
+          \begin{itemize}
+              \item 0: \(A_0\)
+              \item 1: \(A_1\)
+          \end{itemize}
+    \item \textbf{Frequency Shift Keying (FSK)}: the frequency of the
+          carrier wave is switched between two values with continuous
+          phase. For example,
+          \begin{itemize}
+              \item 0: \(f_0\)
+              \item 1: \(f_1\)
+          \end{itemize}
+    \item \textbf{Phase Shift Keying (PSK)}: the phase of the carrier
+          wave is switched between two values. For example,
+          \begin{itemize}
+              \item 0: \(\phi_0\)
+              \item 1: \(\phi_1\)
+          \end{itemize}
+\end{itemize}
+Quadrature Amplitude Modulation (QAM) is a combination of ASK and PSK.
+\subsection{Representing the Carrier Wave}
+The carrier wave is represented by
+\begin{equation*}
+    s\left( t \right) = A\left( t \right) \cos{\left( 2 \pi f_c t + \phi\left( t \right) \right)}
+\end{equation*}
+By using the RMS value of this wave, \(A_{\mathrm{rms}} = A / \sqrt{2}\),
+we can say
+\begin{equation*}
+    s\left( t \right) = \sqrt{2} A_{\mathrm{rms}} \cos{\left( 2 \pi f_c t + \phi\left( t \right) \right)}
+\end{equation*}
+Assuming a \qty{1}{\ohm} resistive load, the power of the carrier wave
+is given by \(P = E_s / T_s = V_{\mathrm{rms}}^2 / R = A_{\mathrm{rms}}^2\),
+where \(E_s\) is the energy per symbol, and \(T_s\) is the symbol period,
+then
+\begin{equation*}
+    s\left( t \right) = \sqrt{\frac{2E_s}{T_s}} \cos{\left( 2 \pi f_c t + \phi\left( t \right) \right)}.
+\end{equation*}
+This can be rewritten as
+\begin{align*}
+    s\left( t \right) & = \sqrt{\frac{2E_s}{T_s}} \cos{\left( 2 \pi f_c t + \phi\left( t \right) \right)}                                                                                                                                                                                                                                       \\
+                      & = \sqrt{E_s} \sqrt{2 R_s} \left[ \cos{\left( 2 \pi f_c t \right)} \cos{\left( \phi\left( t \right) \right)} - \sin{\left( 2 \pi f_c t \right)} \sin{\left( \phi\left( t \right) \right)} \right]                                                                                                                        \\
+                      & = \underbrace{\sqrt{E_s} \cos{\left( \phi\left( t \right) \right)}}_{a} \underbrace{\sqrt{2 R_s} \cos{\left( 2 \pi f_c t \right)}}_{\Psi_1\left( t \right)} - \underbrace{\sqrt{E_s} \sin{\left( \phi\left( t \right) \right)}}_{b} \underbrace{\sqrt{2 R_s} \sin{\left( 2 \pi f_c t \right)}}_{\Psi_2\left( t \right)}
+\end{align*}
+\subsection{Signal Space Representation}
+In the representation:
+\begin{equation*}
+    s\left( t \right) = a \Psi_1\left( t \right) - b \Psi_2\left( t \right),
+\end{equation*}
+the functions \(\Psi_1\left( t \right)\) and \(\Psi_2\left( t \right)\)
+form an orthonormal basis in the \textbf{signal space} so that the
+following inner products over a symbol periods hold. The inner product
+of the two basis functions is 0:
+\begin{equation*}
+    \abracket*{\Psi_1\left( t \right),\: \Psi_2\left( t \right)} = \int_{0}^{T_s} \Psi_1\left( t \right) \Psi_2\left( t \right) \odif{t} = 0,
+\end{equation*}
+and the norm of each basis function is 1:
+\begin{equation*}
+    \abracket*{\Psi_i\left( t \right),\: \Psi_i\left( t \right)} = \int_{0}^{T_s} \Psi_i^2\left( t \right) \odif{t} = 1.
+\end{equation*}
+These functions can be represented on the I-Q plane, where I is the
+\textbf{in-phase} component and Q is the \textbf{quadrature phase}
+component of the signal.
+On this plane, the Cartesian coordinates of \(s\) represent:
+\begin{itemize}
+    \item The in-phase component \(I = a\)
+    \item The quadrature phase component \(Q = b\)
+\end{itemize}
+which are obtained by correlating \(s\) with the basis functions
+\(\Psi_1\) and \(\Psi_2\), respectively:
+\begin{align*}
+    a & = \abracket*{s\left( t \right),\: \Psi_1\left( t \right)} = \int_{0}^{T_s} s\left( t \right) \Psi_1\left( t \right) \odif{t}   \\
+    b & = -\abracket*{s\left( t \right),\: \Psi_2\left( t \right)} = -\int_{0}^{T_s} s\left( t \right) \Psi_2\left( t \right) \odif{t}
+\end{align*}
+and in polar coordinates,
+\begin{itemize}
+    \item The \textbf{amplitude} \(\sqrt{a^2 + b^2} = \sqrt{E_s}\)
+          measures the transmitted signal energy during a symbol
+          period.
+    \item The \textbf{angle} \(\phi\) measures the relation of the
+          signal to another.
+\end{itemize}
+Using this representation, each symbol \(s_i\) is expressed as a vector
+of its coordinates:
+\begin{equation*}
+    s_i = \left[ a_i,\: b_i \right]
+\end{equation*}
+\subsection{Signal Constellation}
+The set of all possible signal vectors \(s\) is called the
+\textbf{signal constellation} of the modulation scheme. This set is
+used to represent the information transmitted by the modulated signal.
+\subsection{Binary Modulation Schemes}
+\subsubsection{Binary Amplitude Shift Keying (BASK)}
+In BASK, the amplitude of the carrier wave is switched between two
+values. One such technique is to use \textbf{On Off Keying} (OOK). The
+signal constellation for BASK is given below
+\begin{align*}
+    s_1 & = \left[ 0,\: 0 \right]          \\
+    s_2 & = \left[ \sqrt{E_b},\: 0 \right]
+\end{align*}
+\subsubsection{Binary Phase Shift Keying (BPSK)}
+In BPSK, the phase of the carrier wave is switched between two values.
+The signal constellation for BPSK is given below
+\begin{align*}
+    s_1 & = \left[ \sqrt{E_b},\: 0 \right]  \\
+    s_2 & = \left[ -\sqrt{E_b},\: 0 \right]
+\end{align*}
+\subsubsection{Binary Frequency Shift Keying (BFSK)}
+In BFSK, the frequency of the carrier wave is switched between two
+values \(f_1\) and \(f_2\). The signal constellation for BFSK is given
+below
+\begin{align*}
+    s_1 & = \left[ \sqrt{E_b},\: 0 \right] \\
+    s_2 & = \left[ \sqrt{E_b},\: 0 \right]
+\end{align*}
+where the in-phase component has a different frequency for each symbol.
+\subsubsection{Summary of Binary Modulation Schemes}
+% \begin{noindent}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccc}
+        \toprule
+        \textbf{Name} &                       \(E_s\) &                    \(\phi\) & \textbf{Signal Constellation} \\
+        \midrule
+        BASK          &   \(\left( 0,\: E_b \right)\) &   \(\left( 0,\: 0 \right)\) & \parbox{10cm}{\begin{align*}
+                                                                                                      s_1\left( t \right) & = 0 \cos{\left( 0 \right)} \sqrt{2R_b} \cos{\left( 2 \pi f_c t \right)}          && = 0   \\
+                                                                                                      s_2\left( t \right) & = \sqrt{E_b} \cos{\left( 0 \right)} \sqrt{2R_b} \cos{\left( 2 \pi f_c t \right)} && = \sqrt{2 E_b R_b} \cos{\left( 2 \pi f_c t \right)}
+                                                                                                   \end{align*}} \\
+        BPSK          & \(\left( E_b,\: E_b \right)\) & \(\left( 0,\: \pi \right)\) & \parbox{10cm}{\begin{align*}
+                                                                                                      s_1\left( t \right) & = \sqrt{E_b} \cos{\left( 0 \right)} \sqrt{2R_b} \cos{\left( 2 \pi f_c t \right)}   && = \sqrt{2 E_b R_b} \cos{\left( 2 \pi f_c t \right)} \\
+                                                                                                      s_2\left( t \right) & = \sqrt{E_b} \cos{\left( \pi \right)} \sqrt{2R_b} \cos{\left( 2 \pi f_c t \right)} && = -\sqrt{2 E_b R_b} \cos{\left( 2 \pi f_c t \right)}
+                                                                                                   \end{align*}} \\
+        BFSK          & \(\left( E_b,\: E_b \right)\) &   \(\left( 0,\: 0 \right)\) & \parbox{10cm}{\begin{align*}
+                                                                                                      s_1\left( t \right) & = \sqrt{E_b} \cos{\left( 0 \right)} \sqrt{2R_b} \cos{\left( 2 \pi f_1 t \right)} && = \sqrt{2 E_b R_b} \cos{\left( 2 \pi f_1 t \right)} \\
+                                                                                                      s_2\left( t \right) & = \sqrt{E_b} \cos{\left( 0 \right)} \sqrt{2R_b} \cos{\left( 2 \pi f_2 t \right)} && = \sqrt{2 E_b R_b} \cos{\left( 2 \pi f_2 t \right)}
+                                                                                                   \end{align*}} \\
+        \bottomrule
+    \end{tabular}
+    % \caption{} % \label{}
+\end{table}
+% \end{noindent}
+\subsection{M-ary Modulation Schemes}
+\subsubsection{M-ary Amplitude Shift Keying (M-ASK)}
+In M-ASK, the amplitude of the carrier wave is switched between \(M\)
+values. The signal constellation for M-ASK is given below
+\begin{equation*}
+    s_i = \left[ \left( 2i - 1 - M \right) \sqrt{E_i},\: 0 \right]
+\end{equation*}
+where \(E_i\) is the energy per symbol given by
+\begin{equation*}
+    \sqrt{E_i} = \left( 2i - 1 - M \right) \sqrt{E_0}.
+\end{equation*}
+where \(E_0\) is the energy of the symbol closest to the origin.
+The average energy per symbol is given by
+\begin{equation*}
+    E_s = \frac{M^2 - 1}{3} E_0
+\end{equation*}
+The error performance of M-ASK is given by
+\begin{equation*}
+    P_b = \frac{2\left( M - 1 \right)}{M \log_2{\left( M \right)}} Q\left( \sqrt{\frac{6 \log_2{\left( M \right)}}{M^2 - 1}} \left( \frac{E_b}{N_0} \right) \right)
+\end{equation*}
+\subsubsection{M-ary Phase Shift Keying (M-PSK)}
+In M-PSK, the phase of the carrier wave is switched between \(M\)
+values. The signal constellation for M-PSK is given below
+\begin{equation*}
+    s_i = \left[ \sqrt{E_s} \cos{\left( \frac{2\pi}{M} i \right)},\: \sqrt{E_s} \sin{\left( \frac{2\pi}{M} i \right)} \right]
+\end{equation*}
+where \(E_s\) is the energy per symbol, which is constant for all
+symbols. The error performance of M-PSK is given by
+\begin{equation*}
+    P_b = \frac{1}{\log_2{\left( M \right)}} Q\left( \sqrt{\log_2{\left( M \right)} \sin^2{\left( \frac{\pi}{M} \right)} \frac{2 E_b}{N_0}} \right)
+\end{equation*}
+\subsubsection{Quadrature Phase Shift Keying (QPSK)}
+In QPSK, the phase of the carrier wave is switched between four values.
+The signal constellation for QPSK is given below
+\begin{equation*}
+    s_i = \left[ \sqrt{E_s} \cos{\left( \frac{\pi}{4} \left( 2i - 1 \right) \right)},\: \sqrt{E_s} \sin{\left( \frac{\pi}{4} \left( 2i - 1 \right) \right)} \right]
+\end{equation*}
+where \(E_s\) is the energy per symbol, which is constant for all
+symbols. As opposite symbols incur a phase shift of \(\pi\), alternative
+modulation schemes are used to reduce the phase shift to \(\pi / 2\).
+
+One such technique is \textbf{Offset QPSK} (OQPSK), where the
+quadrature component of a signal is offset by \(T_b\) to ensure only
+one bit change at any time. \(\pi/4\)-QPSK is another modulation scheme
+where the phase difference varies for each symbol. This allows symbols
+to be mapped to two square constellations, which are rotated by
+\(\pi/4\). The phase difference is given by
+\begin{equation*}
+    \phi_k = \phi_{k - 1} + \theta_k
+\end{equation*}
+\subsubsection{M-ary Quadrature Amplitude Modulation (M-QAM)}
+In M-QAM, both the amplitude and phase of the carrier wave are varied.
+The general expression for the signal constellation of M-QAM is given
+by
+\begin{equation*}
+    s_i = \left[ \sqrt{E_i} \cos{\left( \phi_i \right)},\: \sqrt{E_i} \sin{\left( \phi_i \right)} \right]
+\end{equation*}
+\section{Radio Frequency (RF) Systems}
+\subsection{S-Parameters}
+Two port networks consist of:
+\begin{itemize}
+    \item \textbf{Input port}: port 1
+    \item \textbf{Output port}: port 2
+\end{itemize}
+with a voltage and current at each port:
+\begin{itemize}
+    \item \(V_1\) --- voltage across port 1
+    \item \(I_1\) --- current into port 1
+    \item \(V_2\) --- voltage across port 2
+    \item \(I_2\) --- current into port 2
+\end{itemize}
+Such networks can be represented using various parameters:
+\begin{itemize}
+    \item \textbf{\(z\)-parameters}: open-circuit impedance
+          \begin{equation*}
+              \begin{bmatrix}
+                  V_1 \\
+                  V_2
+              \end{bmatrix}
+              =
+              \begin{bmatrix}
+                  z_{11} & z_{12} \\
+                  z_{21} & z_{22}
+              \end{bmatrix}
+              \begin{bmatrix}
+                  I_1 \\
+                  I_2
+              \end{bmatrix}
+          \end{equation*}
+          where \(z_{ij} = V_i / I_j\) is measured in Ohms (\(\unit{\ohm}\)).
+    \item \textbf{\(y\)-parameters}: short-circuit admittance
+          \begin{equation*}
+              \begin{bmatrix}
+                  I_1 \\
+                  I_2
+              \end{bmatrix}
+              =
+              \begin{bmatrix}
+                  y_{11} & y_{12} \\
+                  y_{21} & y_{22}
+              \end{bmatrix}
+              \begin{bmatrix}
+                  V_1 \\
+                  V_2
+              \end{bmatrix}
+          \end{equation*}
+          where \(y_{ij} = I_i / V_j\) is measured in Siemens (\(\unit{\siemens}\)).
+    \item \textbf{\(ABCD\)-parameters}: chain or transmission parameters
+          \begin{equation*}
+              \begin{bmatrix}
+                  V_1 \\
+                  I_2
+              \end{bmatrix}
+              =
+              \begin{bmatrix}
+                  A & B \\
+                  C & D
+              \end{bmatrix}
+              \begin{bmatrix}
+                  V_2 \\
+                  -I_1
+              \end{bmatrix}
+          \end{equation*}
+          where \(AD - BC = 1\).
+    \item \textbf{\(h\)-parameters}: hybrid parameters
+          \begin{equation*}
+              \begin{bmatrix}
+                  V_1 \\
+                  I_2
+              \end{bmatrix}
+              =
+              \begin{bmatrix}
+                  h_{11} & h_{12} \\
+                  h_{21} & h_{22}
+              \end{bmatrix}
+              \begin{bmatrix}
+                  I_1 \\
+                  V_2
+              \end{bmatrix}
+          \end{equation*}
+    \item \textbf{\(g\)-parameters}: inverse hybrid parameters
+          \begin{equation*}
+              \begin{bmatrix}
+                  I_1 \\
+                  V_2
+              \end{bmatrix}
+              =
+              \begin{bmatrix}
+                  g_{11} & g_{12} \\
+                  g_{21} & g_{22}
+              \end{bmatrix}
+              \begin{bmatrix}
+                  V_1 \\
+                  I_2
+              \end{bmatrix}
+          \end{equation*}
+\end{itemize}
+\subsection{Scattering Parameters}
+Scattering parameters are defined in terms of incident and reflected
+waves at ports, as it is often difficult to measure voltages and
+currents directly at UHF and microwave frequencies. The scattering
+matrix \(\symbf{S}\) is defined
+\begin{equation*}
+    \begin{bmatrix}
+        b_1 \\
+        b_2
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        S_{11} & S_{12} \\
+        S_{21} & S_{22}
+    \end{bmatrix}
+    \begin{bmatrix}
+        a_1 \\
+        a_2
+    \end{bmatrix}
+\end{equation*}
+where \(a_i\) are the incident wave amplitudes and \(b_i\) are the
+reflected wave amplitudes, defined:
+\begin{align*}
+    a_i & = \frac{V_i^+}{\sqrt{Z_{0i}}} = \frac{1}{2} \left( \frac{V_i}{\sqrt{Z_{0i}}} + \sqrt{Z_{0i}} I_i \right) \\
+    b_i & = \frac{V_i^-}{\sqrt{Z_{0i}}} = \frac{1}{2} \left( \frac{V_i}{\sqrt{Z_{0i}}} - \sqrt{Z_{0i}} I_i \right)
+\end{align*}
+where \(V_i^+\) and \(V_i^-\) are the incident and reflected voltages,
+respectively, and \(Z_{0i}\) is the reference impedance of port
+\(i\). Typically this is assumed to be \(\qty{50}{\ohm}\) for every port.
+
+The voltage \(V_i\) across port \(i\) is given by
+\begin{equation*}
+    V_i = \sqrt{Z_{0i}} \left( a_i + b_i \right)
+\end{equation*}
+and the current \(I_i\) into port \(i\) is given by
+\begin{equation*}
+    I_i = \frac{1}{\sqrt{Z_{0i}}} \left( a_i - b_i \right).
+\end{equation*}
+The average power can be calculated using
+\begin{equation*}
+    P_i = \frac{1}{2} \Re\left\{ V_i I_i^* \right\} = \frac{1}{2} \left( \abs*{a_i}^2 - \abs*{b_i}^2 \right)
+\end{equation*}
+\subsection{Oscillators}
+Oscillators are used to generate a sinusoidal signal at a desired
+frequency. Oscillators are generated using a gain device such as an
+amplifier or transistor, and a resonator. An example is the LC network,
+which consists of an amplifier with a feedback path consisting of a
+capacitor and inductor in series. Under proper conditions, this device
+will be unstable, and resonate. The particular frequency at which the
+resontator oscillates is called the \textbf{resonant frequency}. For
+the LC network, this is
+\begin{equation*}
+    \omega_0 = \frac{1}{\sqrt{LC}}.
+\end{equation*}
+Ideally, a perfect resonator will resonate precisely at \(\omega_0\),
+however, in practice, the oscillating frequency is spread around the
+resonant frequency. By performing \textbf{spectral analysis}
+(power vs. frequency) on the output of the oscillator, we can see that
+energy is spread over a range of frequencies centered around \(\omega_0\).
+
+The \textbf{bandwidth} of the output spectrum relates to the
+\textbf{quality} of the resonator.
+\begin{itemize}
+    \item A \textbf{high-Q} resonator has a narrow bandwidth, and
+          therefore a high quality factor.
+    \item A \textbf{low-Q} resonator has a wide bandwidth, and
+          therefore a low quality factor.
+\end{itemize}
+Generally, low-Q resonators are \textbf{lossy} and high-Q resonators
+exhibit \textbf{low loss}. LC networks are low-Q.
+\subsubsection{Resonators}
+Some examples of high-Q resonators include:
+\begin{itemize}
+    \item \textbf{Crystal resonators}: dependent on geometry and lattice structure
+    \item \textbf{Dielectric resonators}: dependent on cavity geometry and dielectric constant. Can be made very small
+    \item \textbf{Transmission line resonators}: made using transmission line sections, (stripline or microstrip)
+\end{itemize}
+\subsubsection{Oscillator Tuning}
+The above resonators have a fixed frequency, and therefore cannot be
+tuned. To tune an oscillator, we can use a \textbf{varactor diode}.
+This is a diode with a capacitance that varies with the applied
+voltage. The resonant frequency is given by
+\begin{equation*}
+    \omega_0 = \frac{1}{\sqrt{L C\left( V_D \right)}}.
+\end{equation*}
+\subsubsection{Harmonics and Spurs}
+Oscillators also produce other frequencies not at the resonant
+frequency. These occur at integer multiples of \(\omega_0\) called
+\textbf{harmonics} or aribtrarily at other frequencies called spurious
+frequencies (\textbf{spurs}).
+
+As the power of these frequencies is typically much lower than the
+resonant frequency, we often measure them in \textbf{dBc} (decibels
+relative to the carrier power \(P_c\)).
+\begin{equation*}
+    P \unit{dBc} = 10 \log_{10}{\left( \frac{P}{P_c} \right)}
+\end{equation*}
+\subsubsection{Phase Noise}
+Consider the signal
+\begin{equation*}
+    \cos{\left( \phi\left( t \right) \right)} = \cos{\left( \omega_0 t + \phi_0 \right)}
+\end{equation*}
+where \(\phi\left( t \right) = \omega_0 t + \phi_0\) is the total or
+absolute phase of the signal. Note that this is a linearly increasing
+function of time. If we define the relative phase as
+\(\phi_r\left( t \right) = \phi\left( t \right) - \omega_0 t\), then
+\begin{equation*}
+    \cos{\left( \phi\left( t \right) \right)} = \cos{\left( \omega_0 t + \phi_r\left( t \right) \right)}.
+\end{equation*}
+This allows us to define the \textbf{instantaneous frequency} as
+\begin{equation*}
+    \omega\left( t \right) = \odv{\phi\left( t \right)}{t} = \omega_0 + \omega_r\left( t \right).
+\end{equation*}
+Therefore the frequency of the signal changes over time. If \(\phi_r\left( t \right)\)
+is a random process, then the frequency of the signal is also a random
+process. This is called \textbf{phase noise}.
+
+The spectrum of this noise can be quantified using its average spectral
+power density measured in \unit{W/Hz}.
+\begin{itemize}
+    \item For white noise, the spectral power density is constant with
+          respect to frequency.
+    \item For an oscillator, the spectral power density changes with
+          respect to frequency. The average spectral power density
+          increases as \(\omega\) approaches \(\omega_0\).
+\end{itemize}
+Phase noise is also measured using \textbf{dBc}, where power is measured
+in a 1Hz bandwidth, for dimensions to be consistent.
+\subsubsection{Frequency Pulling and Pushing}
+The output of an oscillator is always attached to some load impedance
+\(\Gamma_L\). The impedance of this load can affect the operating
+frequency of the oscillator. This is called \textbf{frequency pulling}.
+Therefore an oscillator is designed assuming that the load is matched,
+i.e., \(\Gamma_L = 0\). Frequency pulling is specified as the maximum
+deviation from the nominal frequency given some worst case load.
+
+Frequency pulling can be minimsed by isolating the oscillator from the
+load, using an \textbf{isolation amplifier}.
+
+Frequency pushing is similar to frequency pulling, where the supply
+voltage causes the operating frequency to change. Frequency pushing can
+be reduced by using a high-Q resonator, and by regulating the supply
+voltage.
+\subsection{Mixers}
+A mixer is a device that multiplies two signals to produce a third
+signal. It is a three-port, non-linear device, where the ports are
+referred to as:
+\begin{itemize}
+    \item \textbf{RF port}: the radio frequency input
+    \item \textbf{LO port}: the local oscillator input
+    \item \textbf{IF port}: the intermediate frequency output
+\end{itemize}
+Ideally, the output of a mixer is given by
+\begin{align*}
+    v_{\mathrm{IF}} & = v_{\mathrm{RF}} v_{\mathrm{LO}}                                                                                                                                                               \\
+                    & = \cos{\left( \omega_{\mathrm{RF}} t \right)} \cos{\left( \omega_{\mathrm{LO}} t \right)}                                                                                                       \\
+                    & = \frac{1}{2} \cos{\left( \left( \omega_{\mathrm{RF}} + \omega_{\mathrm{LO}} \right) t \right)} + \frac{1}{2} \cos{\left( \left( \omega_{\mathrm{RF}} - \omega_{\mathrm{LO}} \right) t \right)}
+\end{align*}
+so that the output band is located at the sum and difference of the
+RF and LO frequencies.
+\subsubsection{Diode Mixers}
+A non-ideal mixer can be implemented as the sum of the RF and LO
+voltages across a non-linear device. This is called a \textbf{diode
+mixer}. The current across a diode is given by
+\begin{equation*}
+    i_D\left( t \right) = i_s \left( A e^{v_D\left( t \right)} - 1 \right)
+\end{equation*}
+for some constant \(A\). If we consider the Taylor series expansion of
+the exponential term and group all constants, this becomes
+\begin{equation*}
+    i_D\left( t \right) = a_1 v_D\left( t \right) + a_2 v_D^2\left( t \right) + a_3 v_D^3\left( t \right) + \ldots
+\end{equation*}
+As the voltage across the diode is the sum of the RF and LO voltages,
+we can write
+\begin{equation*}
+    v_D\left( t \right) = v_{\mathrm{RF}}\left( t \right) + v_{\mathrm{LO}}\left( t \right)
+\end{equation*}
+so that
+\begin{equation*}
+    i_D\left( t \right) =
+    \begin{aligned}[t]
+         & a_1 \left( v_{\mathrm{RF}}\left( t \right) + v_{\mathrm{LO}}\left( t \right) \right) +                                                                                                                                               \\
+         & a_2 \left( v_{\mathrm{RF}}^2\left( t \right) + 2 v_{\mathrm{RF}}\left( t \right) v_{\mathrm{LO}}\left( t \right) + v_{\mathrm{LO}}^2\left( t \right) \right) +                                                                       \\
+         & a_3 \left( v_{\mathrm{RF}}^3\left( t \right) + 3 v_{\mathrm{RF}}^2\left( t \right) v_{\mathrm{LO}}\left( t \right) + 3 v_{\mathrm{RF}}\left( t \right) v_{\mathrm{LO}}^2\left( t \right) + v_{\mathrm{LO}}^3\left( t \right) \right)
+    \end{aligned}
+\end{equation*}
+By considering the output from each coefficient, we can can identify the
+freqencies produced at the output of the mixer.
+\begin{itemize}
+    \item 1st order terms:
+          \begin{equation*}
+              v_{\mathrm{RF}}\left( t \right) + v_{\mathrm{LO}}\left( t \right) = \cos{\left( \omega_{\mathrm{RF}} t \right)} + \cos{\left( \omega_{\mathrm{LO}} t \right)}
+          \end{equation*}
+          produce frequencies at \(\omega_{\mathrm{RF}}\) and \(\omega_{\mathrm{LO}}\).
+    \item 2nd order terms:
+          \begin{multline*}
+              v_{\mathrm{RF}}^2\left( t \right) + 2 v_{\mathrm{RF}}\left( t \right) v_{\mathrm{LO}}\left( t \right) + v_{\mathrm{LO}}^3\left( t \right) = \\
+              \frac{1}{2} \left[ \cos{\left( 2\omega_{\mathrm{RF}} t \right)} + \cos{\left( \left( \omega_{\mathrm{RF}} - \omega_{\mathrm{LO}} \right) t \right)} + \cos{\left( \left( \omega_{\mathrm{RF}} + \omega_{\mathrm{LO}} \right) t \right)} + \cos{\left( 2\omega_{\mathrm{LO}} t \right)} \right]
+          \end{multline*}
+          produce frequencies at \(2\omega_{\mathrm{RF}}\), \(\abs*{\omega_{\mathrm{RF}} - \omega_{\mathrm{LO}}}\), \(\omega_{\mathrm{RF}} + \omega_{\mathrm{LO}}\), and \(2\omega_{\mathrm{LO}}\).
+    \item 3rd order terms:
+          \begin{multline*}
+              v_{\mathrm{RF}}^3\left( t \right) + 3 v_{\mathrm{RF}}^2\left( t \right) v_{\mathrm{LO}}\left( t \right) + 3 v_{\mathrm{RF}}\left( t \right) v_{\mathrm{LO}}^2\left( t \right) + v_{\mathrm{LO}}^3\left( t \right) = \\
+              \begin{aligned}[t]
+                   & \frac{1}{4} \left[ 3 \cos{\left( \omega_{\mathrm{RF}} t \right)} + \cos{\left( 3\omega_{\mathrm{RF}} t \right)} \right. +                                                                                                  \\
+                   & 6\cos{\left( \omega_{\mathrm{LO}} t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{RF}} - \omega_{\mathrm{LO}} \right) t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{RF}} - \omega_{\mathrm{LO}} \right) t \right)} + {} \\
+                   & 6\cos{\left( \omega_{\mathrm{RF}} t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{LO}} - \omega_{\mathrm{RF}} \right) t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{LO}} - \omega_{\mathrm{RF}} \right) t \right)} + {} \\
+                   & \left. 3 \cos{\left( \omega_{\mathrm{LO}} t \right)} + \cos{\left( 3\omega_{\mathrm{LO}} t \right)} \right]
+              \end{aligned}
+          \end{multline*}
+          produce frequencies at \(3\omega_{\mathrm{RF}}\), \(\abs*{2\omega_{\mathrm{RF}} - \omega_{\mathrm{LO}}}\), \(2\omega_{\mathrm{RF}} + \omega_{\mathrm{LO}}\), \(\abs*{2\omega_{\mathrm{LO}} - \omega_{\mathrm{RF}}}\), \(2\omega_{\mathrm{LO}} + \omega_{\mathrm{RF}}\), and \(3\omega_{\mathrm{LO}}\).
+\end{itemize}
+The ideal mixer output sets all terms to zero, except:
+\begin{equation*}
+    v_{\mathrm{IF}}\left( t \right) = 2 a_2 v_{\mathrm{RF}}\left( t \right) v_{\mathrm{LO}}\left( t \right)
+\end{equation*}
+which produces frequencies at \(\abs*{\omega_{\mathrm{RF}} - \omega_{\mathrm{LO}}}\) and \(\omega_{\mathrm{RF}} + \omega_{\mathrm{LO}}\).
 \end{document}
