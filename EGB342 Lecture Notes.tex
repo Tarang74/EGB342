@@ -1622,6 +1622,18 @@ The average power can be calculated using
 \begin{equation*}
     P_i = \frac{1}{2} \Re\left\{ V_i I_i^* \right\} = \frac{1}{2} \left( \abs*{a_i}^2 - \abs*{b_i}^2 \right)
 \end{equation*}
+These four parameters have the following physical interpretations:
+\begin{itemize}
+    \item \(S_{11}\) --- voltage reflection coefficient at port 1
+    \item \(S_{12}\) --- voltage transmission coefficient from port 2 to port 1
+    \item \(S_{21}\) --- voltage transmission coefficient from port 1 to port 2
+    \item \(S_{22}\) --- voltage reflection coefficient at port 2
+\end{itemize}
+The voltage reflection coefficient is given by
+\begin{align*}
+    S_{11} & = \Gamma_{\mathrm{in}} = \frac{b_1}{a_1} = \frac{Z_1 - Z_0}{Z_1 + Z_0}  \\
+    S_{22} & = \Gamma_{\mathrm{out}} = \frac{b_2}{a_2} = \frac{Z_2 - Z_0}{Z_2 + Z_0}
+\end{align*}
 \subsection{Oscillators}
 Oscillators are used to generate a sinusoidal signal at a desired
 frequency. Oscillators are generated using a gain device such as an
@@ -1675,7 +1687,7 @@ As the power of these frequencies is typically much lower than the
 resonant frequency, we often measure them in \textbf{dBc} (decibels
 relative to the carrier power \(P_c\)).
 \begin{equation*}
-    P \unit{dBc} = 10 \log_{10}{\left( \frac{P}{P_c} \right)}
+    P (\unit{dBc}) = 10 \log_{10}{\left( \frac{P}{P_c} \right)}
 \end{equation*}
 \subsubsection{Phase Noise}
 Consider the signal
@@ -1784,9 +1796,9 @@ freqencies produced at the output of the mixer.
           \begin{multline*}
               v_{\mathrm{RF}}^3\left( t \right) + 3 v_{\mathrm{RF}}^2\left( t \right) v_{\mathrm{LO}}\left( t \right) + 3 v_{\mathrm{RF}}\left( t \right) v_{\mathrm{LO}}^2\left( t \right) + v_{\mathrm{LO}}^3\left( t \right) = \\
               \begin{aligned}[t]
-                   & \frac{1}{4} \left[ 3 \cos{\left( \omega_{\mathrm{RF}} t \right)} + \cos{\left( 3\omega_{\mathrm{RF}} t \right)} \right. +                                                                                                  \\
-                   & 6\cos{\left( \omega_{\mathrm{LO}} t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{RF}} - \omega_{\mathrm{LO}} \right) t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{RF}} - \omega_{\mathrm{LO}} \right) t \right)} + {} \\
-                   & 6\cos{\left( \omega_{\mathrm{RF}} t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{LO}} - \omega_{\mathrm{RF}} \right) t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{LO}} - \omega_{\mathrm{RF}} \right) t \right)} + {} \\
+                   & \frac{1}{4} \left[ 3 \cos{\left( \omega_{\mathrm{RF}} t \right)} + \cos{\left( 3\omega_{\mathrm{RF}} t \right)} \right. +                                                                                                     \\
+                   & 6\cos{\left( \omega_{\mathrm{LO}} t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{RF}} - \omega_{\mathrm{LO}} \right) t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{RF}} + \omega_{\mathrm{LO}} \right) t \right)} + {} \\
+                   & 6\cos{\left( \omega_{\mathrm{RF}} t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{LO}} - \omega_{\mathrm{RF}} \right) t \right)} + 3\cos{\left( \left( 2\omega_{\mathrm{LO}} + \omega_{\mathrm{RF}} \right) t \right)} + {} \\
                    & \left. 3 \cos{\left( \omega_{\mathrm{LO}} t \right)} + \cos{\left( 3\omega_{\mathrm{LO}} t \right)} \right]
               \end{aligned}
           \end{multline*}
@@ -1797,4 +1809,353 @@ The ideal mixer output sets all terms to zero, except:
     v_{\mathrm{IF}}\left( t \right) = 2 a_2 v_{\mathrm{RF}}\left( t \right) v_{\mathrm{LO}}\left( t \right)
 \end{equation*}
 which produces frequencies at \(\abs*{\omega_{\mathrm{RF}} - \omega_{\mathrm{LO}}}\) and \(\omega_{\mathrm{RF}} + \omega_{\mathrm{LO}}\).
+\subsection{RF Amplifiers}
+Low noise amplifiers (LNAs) are used to amplify weak signals from
+antennas. They usually consist of a single stage RF transistor
+amplifier. The purpose of an LNA is to improve the system noise
+temperature by
+\begin{itemize}
+    \item providing useful gain
+    \item having a very low noise figure
+\end{itemize}
+As this amplifier receives a high frequency signal, it requires
+impedance matching at the input and output stages of the RF transitor
+(to obtain the minimal noise figure), and therefore high gain is usually
+not achieved.
+\subsubsection{Impedance Matching}
+To maximise the power transfer from a source to a load, it is important
+to match the impedance of the source to the impedance of the load. This
+corresponds to achieving \(\Gamma = 0\), so that no power is reflected
+back to the source. This occurs precisely when \(Z_L = Z_0\).
+
+When this is not possible, we can use a matching network to achieve
+impedance matching. This is a network of capacitors and inductors that
+modify the impedance of the load. Note that using resistors will reduce
+the efficiency of the network, as power will be dissipated.
+\subsubsection{LNA Noise Figure}
+Several noise parameters are published to characterise the optimum
+noise figure operating conditions. These include:
+\begin{itemize}
+    \item \(F_{\min}\): the minimum noise figure when the source admittance \(Y_s = Y_{\mathrm{opt}}\)
+    \item \(\Gamma_{\mathrm{opt}}\): the optimum reflection coefficient of the source impedance for minimum noise figure \(F_{\min}\)
+    \item \(R_N\): the equivalent noise resistance of the transistor
+\end{itemize}
+\subsubsection{Dynamic Range}
+The dynamic range of an amplifier is the range of input power levels
+over which the amplifier can operate. This sits above a \textbf{noise
+floor} which is the minimum input power level that can be detected by
+the amplifier. This noise floor is dependent on the operating
+temperature of the amplifier and the construction of the amplifier. The
+upper limit of the dynamic range is the \textbf{1dB compression point}
+at which the amplifier output power is 1dB below the typical linear
+output gain. The amplifer enters the saturation region beyond this
+point.
+\subsubsection{Amplifier Non-Linearity}
+Ideally amplifiers should provide the same gain for a wide range of
+frequencies, so that in the ideal case,
+\begin{equation*}
+    v_{\mathrm{out}} = A v_{\mathrm{in}}
+\end{equation*}
+however, actual amplifiers will contain several non-linear terms, which
+can be described by a Taylor series expansion:
+\begin{equation*}
+    v_{\mathrm{out}} = A v_{\mathrm{in}} + B v_{\mathrm{in}}^2 + C v_{\mathrm{in}}^3 + \ldots
+\end{equation*}
+Generally it is possible to design an amplifier with small \(B\) and
+\(C\), such that
+\begin{equation*}
+    v_{\mathrm{out}} \approx A v_{\mathrm{in}}
+\end{equation*}
+however, as \(v_{\mathrm{in}}\) becomes large, \(v_{\mathrm{in}}^2\) and \(v_{\mathrm{in}}^3\) become
+significantly large, and the terms \(B v_{\mathrm{in}}^2\) and \(C v_{\mathrm{in}}^3\) become
+significant, which results in the output being distorted, rather than
+amplified. This phenomenon is known as \textbf{intermodulation distortion}.
+\subsubsection{Harmonics}
+In addition to this, the amplifier will also produce harmonics of the
+input signal, which is known as \textbf{harmonic distortion}. If we
+assume the input signal to be sinusoidal with amplitude \(a\), then
+\begin{align*}
+    v_{\mathrm{out}} & = A v_{\mathrm{in}} + B v_{\mathrm{in}}^2 + C v_{\mathrm{in}}^3 + \ldots                                                                                                                                               \\
+                     & = A a \cos{\left( \omega t \right)} + B a^2 \cos^2{\left( \omega t \right)} + C a^3 \cos^3{\left( \omega t \right)} + \ldots                                                                                           \\
+                     & = A a \cos{\left( \omega t \right)} + \frac{1}{2} B a^2 \left( 1 + \cos{\left( 2\omega t \right)} \right) + \frac{1}{4} C a^3 \left( 3 \cos{\left( \omega t \right)} + \cos{\left( 3\omega t \right)} \right) + \ldots
+\end{align*}
+so that the second order term produces a harmonic at \(2\omega\),
+\begin{equation*}
+    \frac{B a^2}{2} \cos{\left( 2\omega t \right)}
+\end{equation*}
+and the third order term produces harmonics at \(3\omega\),
+\begin{equation*}
+    \frac{C a^3}{4} \cos{\left( 3\omega t \right)}.
+\end{equation*}
+The \textbf{harmonic power} of this amplifier is defined as,
+\begin{itemize}
+    \item 1st order:
+          \begin{equation*}
+              P_1^{\mathrm{out}} = A^2 P_{\mathrm{in}} = G_1 P_{\mathrm{in}}
+          \end{equation*}
+    \item 2nd order:
+          \begin{equation*}
+              P_2^{\mathrm{out}} = \frac{B^2}{4} P_{\mathrm{in}}^2 = G_2 P_{\mathrm{in}}^2
+          \end{equation*}
+    \item 3rd order:
+          \begin{equation*}
+              P_3^{\mathrm{out}} = \frac{C^2}{16} P_{\mathrm{in}}^3 = G_3 P_{\mathrm{in}}^3
+          \end{equation*}
+\end{itemize}
+where \(G_i\) is the gain of the \(i\)th order harmonic. Expressed in
+decibels, this becomes
+\begin{align*}
+    P_1^{\mathrm{out}} (\unit{dBm}) & = G_1 (\unit{dB}) + P_{\mathrm{in}} (\unit{dBm})  \\
+    P_2^{\mathrm{out}} (\unit{dBm}) & = G_2 (\unit{dB}) + 2P_{\mathrm{in}} (\unit{dBm}) \\
+    P_3^{\mathrm{out}} (\unit{dBm}) & = G_3 (\unit{dB}) + 3P_{\mathrm{in}} (\unit{dBm})
+\end{align*}
+Plotting each of these signals on a power input to power output graph,
+we can see the effect of increasing the input power on the output of
+the higher order harmonics. The output power where the output of the
+second harmonic intercepts the output power of the first harmonic is
+known as the \textbf{second-order intercept point},
+\begin{equation*}
+    P_2^{\mathrm{int}} \coloneq P_1^{\mathrm{out}} = P_2^{\mathrm{out}}
+\end{equation*}
+this occurs when
+\begin{equation*}
+    G_1 + P_{\mathrm{in}} = G_2 + 2P_{\mathrm{in}} \implies P_{\mathrm{in}} = G_1 - G_2 \implies P_2^{\mathrm{int}} = 2G_1 - G_2
+\end{equation*}
+Similarly, the output power where the output of the third harmonic
+intercepts the output power of the first harmonic is known as the
+\textbf{third-order intercept point},
+\begin{equation*}
+    P_3^{\mathrm{int}} \coloneq P_1^{\mathrm{out}} = P_3^{\mathrm{out}}
+\end{equation*}
+this occurs when
+\begin{equation*}
+    G_1 + P_{\mathrm{in}} = G_3 + 3P_{\mathrm{in}} \implies P_{\mathrm{in}} = \frac{G_1 - G_3}{2} \implies P_3^{\mathrm{int}} = \frac{3G_1 - G_3}{2}
+\end{equation*}
+When choosing an amplifier, a higher intercept point is desirable, as
+this means that the amplifier can handle higher input powers before
+harmonic distortion becomes significant. Note that decreasing \(G_2\)
+and \(G_3\) increases the intercept points.
+\subsubsection{Intermodulation Distortion}
+Typically only the third order intercept is important to consider, as
+it plays a significant role in two-tone intermodulation distortion.
+Consider the input signal with two tones,
+\begin{equation*}
+    v_{\mathrm{in}} = a \cos{\left( \omega_1 t \right)} + a \cos{\left( \omega_2 t \right)}
+\end{equation*}
+The second order harmonic is given by
+\begin{equation*}
+    B \left[ \frac{a^2}{2} \cos{\left( 2\omega_1 t \right)} + a^2 \cos{\left( \left( \omega_1 - \omega_2 \right) t \right)} + a^2 \cos{\left( \left( \omega_1 + \omega_2 \right) t \right)} + a^2 + \frac{a^2}{2} \cos{\left( 2\omega_2 t \right)} \right]
+\end{equation*}
+and the third order harmonic is given by
+\begin{equation*}
+    \begin{aligned}[t]
+         & C \left[ \frac{3}{4} \cos{\left( \omega_1 t \right)} + \frac{1}{4} \cos{\left( 3\omega_1 t \right)} \right. +                                                                                      \\
+         & \frac{6}{4} \cos{\left( \omega_2 t \right)} + \frac{3}{4} \cos{\left( \left( 2\omega_1 - \omega_2 \right) t \right)} + \frac{3}{4} \cos{\left( \left( 2\omega_1 + \omega_2 \right) t \right)} + {} \\
+         & \frac{6}{4} \cos{\left( \omega_1 t \right)} + \frac{3}{4} \cos{\left( \left( 2\omega_2 - \omega_1 \right) t \right)} + \frac{3}{4} \cos{\left( \left( 2\omega_2 + \omega_1 \right) t \right)} + {} \\
+         & \left. \frac{3}{4} \cos{\left( \omega_2 t \right)} + \frac{1}{4} \cos{\left( 3\omega_2 t \right)} \right]
+    \end{aligned}
+\end{equation*}
+When \(\omega_1 \approx \omega_2\), the third order harmonic produces
+frequencies at \(2 \omega_1 - \omega_2 \approx \omega_1\) and
+\(2 \omega_2 - \omega_1 \approx \omega_2\), which are close to the
+input frequencies. During the filtering stage it is nearly impossible
+to filter out these frequencies without also filtering out the input
+frequencies. Hence, we must choose an amplifier with a high third order
+intercept point, so that the effect of these harmonics is minimised.
+\subsection{RF Filters}
+RF (microwave) filters are typically a passive, reciprocal, 2-port
+linear device used to remove unwanted frequencies from a signal of
+interest. If port 2 is terminated with a matched load, then the incident
+(input) and output power are related by
+\begin{equation*}
+    P_{\mathrm{out}} = \abs*{S_{21}}^2 P_{\mathrm{in}}.
+\end{equation*}
+Here we can define the \textbf{power transmission coefficient} \(T\) as
+\begin{equation*}
+    T = \frac{P_{\mathrm{out}}}{P_{\mathrm{in}}} = \abs*{S_{21}}^2
+\end{equation*}
+where for a passive filter, \(0 \leqslant T \leqslant 1\), or
+\(P_{\mathrm{out}} \leqslant P_{\mathrm{in}}\).
+
+The power reduction of a filter can either be absorbed by the filter \(P_{\mathrm{abs}}\)
+(dissipated as heat), or reflected back to the source (\(P_r\)). Then by
+the conservation of energy, we have
+\begin{equation*}
+    P_{\mathrm{in}} = P_{\mathrm{out}} + P_{\mathrm{abs}} + P_r
+\end{equation*}
+Ideally, microwave filters are lossless, so that \(P_{\mathrm{abs}} = 0\),
+and
+\begin{equation*}
+    P_{\mathrm{in}} = P_{\mathrm{out}} + P_r \implies 1 = \frac{P_\mathrm{out}}{P_{\mathrm{in}}} + \frac{P_r}{P_{\mathrm{in}}} = T + R
+\end{equation*}
+where \(R\) is the \textbf{power reflection coefficient} given by
+\begin{equation*}
+    R = \frac{P_r}{P_{\mathrm{in}}} = \abs*{S_{11}}^2.
+\end{equation*}
+This tells us that
+\begin{equation*}
+    1 = \abs*{S_{21}}^2 + \abs*{S_{11}}^2
+\end{equation*}
+For a microwave filter, \(R\) and \(T\) are functions of \(\omega\), so
+that for some signal frequency \(\omega_s\), we have
+\begin{equation*}
+    R\left( \omega_s \right) \approx 0 \qquad \text{and} \qquad T\left( \omega_s \right) \approx 1
+\end{equation*}
+where \(\omega_s\) lies in the \textbf{passband} and all frequencies
+\textbf{pass through} the filter. Or
+\begin{equation*}
+R\left( \omega_s \right) \approx 1 \qquad \text{and} \qquad T\left( \omega_s \right) \approx 0
+\end{equation*}
+where \(\omega_s\) lies in the \textbf{stopband} and all frequencies
+are \textbf{reflected} at the input of the filter.
+\subsubsection{Low Pass Filters}
+A low pass filter is a filter that passes low frequencies and rejects
+high frequencies. For this filter,
+\begin{equation*}
+    T\left( \omega \right) \approx \begin{cases}
+        0 & \omega > \omega_c \\
+        1 & \omega < \omega_c
+    \end{cases}
+    \qquad \text{and} \qquad
+    R\left( \omega \right) \approx \begin{cases}
+        1 & \omega > \omega_c \\
+        0 & \omega < \omega_c
+    \end{cases}
+\end{equation*}
+The cut-off frequency \(\omega_c\) is defined as the frequency where
+\(T = \frac{1}{2}\). For a lossless filter, this also implies
+\(R = \frac{1}{2}\).
+\subsubsection{High Pass Filters}
+A high pass filter is a filter that passes high frequencies and rejects
+low frequencies. For this filter,
+\begin{equation*}
+    T\left( \omega \right) \approx \begin{cases}
+        1 & \omega > \omega_c \\
+        0 & \omega < \omega_c
+    \end{cases}
+    \qquad \text{and} \qquad
+    R\left( \omega \right) \approx \begin{cases}
+        0 & \omega > \omega_c \\
+        1 & \omega < \omega_c
+    \end{cases}
+\end{equation*}
+The cut-off frequency \(\omega_c\) is defined as the frequency where
+\(T = \frac{1}{2}\). For a lossless filter, this also implies
+\(R = \frac{1}{2}\).
+\subsubsection{Band Pass Filters}
+A band pass filter is a filter that passes frequencies within a certain
+bandwidth \(\Delta{\omega}\) and rejects frequencies outside this
+bandwidth. For this filter,
+\begin{equation*}
+    T\left( \omega \right) \approx \begin{cases}
+        1 & \abs*{\omega - \omega_0} < \frac{\Delta{\omega}}{2} \\
+        0 & \abs*{\omega - \omega_0} > \frac{\Delta{\omega}}{2}
+    \end{cases}
+    \qquad \text{and} \qquad
+    R\left( \omega \right) \approx \begin{cases}
+        0 & \abs*{\omega - \omega_0} < \frac{\Delta{\omega}}{2} \\
+        1 & \abs*{\omega - \omega_0} > \frac{\Delta{\omega}}{2}
+    \end{cases}
+\end{equation*}
+where \(\omega_0\) is the centre frequency of the filter.
+\subsubsection{Band Stop Filters}
+A band stop filter is a filter that rejects frequencies within a certain
+bandwidth \(\Delta{\omega}\) and passes frequencies outside this
+bandwidth. For this filter,
+\begin{equation*}
+    T\left( \omega \right) \approx \begin{cases}
+        0 & \abs*{\omega - \omega_0} < \frac{\Delta{\omega}}{2} \\
+        1 & \abs*{\omega - \omega_0} > \frac{\Delta{\omega}}{2}
+    \end{cases}
+    \qquad \text{and} \qquad
+    R\left( \omega \right) \approx \begin{cases}
+        1 & \abs*{\omega - \omega_0} < \frac{\Delta{\omega}}{2} \\
+        0 & \abs*{\omega - \omega_0} > \frac{\Delta{\omega}}{2}
+    \end{cases}
+\end{equation*}
+where \(\omega_0\) is the centre frequency of the filter.
+\subsubsection{Filter Bandwidth}
+The vast majority of microwave filters are bandpass filters. These filters
+are characterised by their \textbf{percentage bandwidth} defined as
+\begin{equation*}
+    \%\mathrm{BW} = \frac{\Delta{f}}{f_0} \times 100\%.
+\end{equation*}
+where \(\Delta{f}\) is the bandwidth and \(f_0\) is the centre frequency.
+
+Bandpass filters are classified as either narrowband or wideband filters,
+depending on either the percentage bandwidth or the technology used to
+construct the filters.
+\begin{itemize}
+    \item \textbf{Percentage bandwidth}: A percentage bandwidth less
+    than 10\%, is considered a \textbf{narrowband} filter.
+    \item \textbf{Technology used to construct the filter}: If the filter
+    is constructed using lumped and/or distributed elements (e.g.,
+    inductors, capacitors, transmission lines), it is considered a
+    \textbf{narrowband} filter. Note that it is difficult to achieve
+    small percentage bandwidths (less than 3\%) using these elements.
+\end{itemize}
+For very narrowband filters, we must use high-Q resonators such as dielectric
+cavities, crystals, or SAWs, though achieving a percentage bandwidth of
+less than 0.1\% is difficult.
+\subsubsection{Filter Phase Function}
+The phase function of a filter is defined as the phase of the scattering
+parameter \(S_{21}\) as a function of frequency,
+\begin{equation*}
+    \angle S_{21} = \arctan{\left( \frac{\Im{\left( S_{21} \right)}}{\Re{\left( S_{21} \right)}} \right)}.
+\end{equation*}
+Given an incident wave \(V_1^+ \left( z_1 \right) = V_{01}^+ e^{-j \beta z}\),
+the output wave is given by
+\begin{align*}
+    V_2^- \left( z_2 \right) & = V_{02}^- e^{j \beta z_2} \\
+                             & = S_{21} V_{01}^- e^{j \beta z_2} \\
+                             & = \abs*{S_{21}} V_{01}^- e^{j \left( \beta z_2 + \angle S_{21} \right)}
+\end{align*}
+This phase shift is created by the propagation delay of the filter.
+The propagation delay \(\tau\left( \omega \right)\) and phase delay
+\(\angle S_{21}\left( \omega \right)\) are related by
+\begin{equation*}
+    \tau\left( \omega \right) = \pdv{\angle S_{21}\left( \omega \right)}{\omega}
+\end{equation*}
+which implies that a constant phase shift corresponds to a constant delay.
+
+If different frequencies propagate at different velocities through a
+microwave filter (each frequency has a different delay), the output
+signal will be distored. This phenomenon is known as \textbf{dispersion},
+and this can be calculated using the phase delay
+(\(\Delta \angle S_{21}\)) and signal bandwidth \(2\pi B_s\). When
+\begin{equation*}
+    B_s \Delta \angle S_{21} \ll 1
+\end{equation*}
+the dispersion is insignificant. Typically a filter is designed so that
+\begin{equation*}
+    B_s \Delta \angle S_{21} \leqslant 0.1
+\end{equation*}
+\subsubsection{Normalised Frequency Parameter}
+We can use normalised attenuation charts to predict the attenuation of
+frequencies in the stopband. The normalised frequency parameter is
+defined as
+\begin{itemize}
+    \item \textbf{Low pass filters}:
+          \begin{equation*}
+              \alpha = \frac{f}{f_c} - 1
+          \end{equation*}
+    \item \textbf{High pass filters}:
+          \begin{equation*}
+              \alpha = \frac{f_c}{f} - 1
+          \end{equation*}
+\end{itemize}
+where \(f_c\) is the cut-off frequency of the filter.
+For bandpass and bandstop filters:
+\begin{itemize}
+    \item \textbf{Band pass filters}:
+          \begin{equation*}
+              \alpha = \abs*{\frac{1}{\Delta} \left( \frac{f}{f_0} - \frac{f_0}{f} \right)} - 1
+          \end{equation*}
+    \item \textbf{Band stop filters}:
+          \begin{equation*}
+              \alpha = \abs*{\frac{1}{\Delta} \left( \frac{f_0}{f} - \frac{f}{f_0} \right)^{-1}} - 1
+          \end{equation*}
+\end{itemize}
+where \(f_0 = \sqrt{f_L f_H}\) is the centre frequency, and
+\(\Delta = \frac{f_H - f_L}{f_0}\) is the percentage bandwidth.
 \end{document}
