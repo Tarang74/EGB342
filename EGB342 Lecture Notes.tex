@@ -1965,8 +1965,8 @@ intercept point, so that the effect of these harmonics is minimised.
 \subsection{RF Filters}
 RF (microwave) filters are typically a passive, reciprocal, 2-port
 linear device used to remove unwanted frequencies from a signal of
-interest. If port 2 is terminated with a matched load, then the incident
-(input) and output power are related by
+interest. If port 2 is terminated with a matched load, then the
+incident (input) and output power are related by
 \begin{equation*}
     P_{\mathrm{out}} = \abs*{S_{21}}^2 P_{\mathrm{in}}.
 \end{equation*}
@@ -1977,9 +1977,9 @@ Here we can define the \textbf{power transmission coefficient} \(T\) as
 where for a passive filter, \(0 \leqslant T \leqslant 1\), or
 \(P_{\mathrm{out}} \leqslant P_{\mathrm{in}}\).
 
-The power reduction of a filter can either be absorbed by the filter \(P_{\mathrm{abs}}\)
-(dissipated as heat), or reflected back to the source (\(P_r\)). Then by
-the conservation of energy, we have
+The power reduction of a filter can either be absorbed by the filter
+\(P_{\mathrm{abs}}\) (dissipated as heat), or reflected back to the
+source (\(P_r\)). Then by the conservation of energy, we have
 \begin{equation*}
     P_{\mathrm{in}} = P_{\mathrm{out}} + P_{\mathrm{abs}} + P_r
 \end{equation*}
@@ -2004,7 +2004,7 @@ that for some signal frequency \(\omega_s\), we have
 where \(\omega_s\) lies in the \textbf{passband} and all frequencies
 \textbf{pass through} the filter. Or
 \begin{equation*}
-R\left( \omega_s \right) \approx 1 \qquad \text{and} \qquad T\left( \omega_s \right) \approx 0
+    R\left( \omega_s \right) \approx 1 \qquad \text{and} \qquad T\left( \omega_s \right) \approx 0
 \end{equation*}
 where \(\omega_s\) lies in the \textbf{stopband} and all frequencies
 are \textbf{reflected} at the input of the filter.
@@ -2012,12 +2012,14 @@ are \textbf{reflected} at the input of the filter.
 A low pass filter is a filter that passes low frequencies and rejects
 high frequencies. For this filter,
 \begin{equation*}
-    T\left( \omega \right) \approx \begin{cases}
+    T\left( \omega \right) \approx
+    \begin{cases}
         0 & \omega > \omega_c \\
         1 & \omega < \omega_c
     \end{cases}
     \qquad \text{and} \qquad
-    R\left( \omega \right) \approx \begin{cases}
+    R\left( \omega \right) \approx
+    \begin{cases}
         1 & \omega > \omega_c \\
         0 & \omega < \omega_c
     \end{cases}
@@ -2029,12 +2031,14 @@ The cut-off frequency \(\omega_c\) is defined as the frequency where
 A high pass filter is a filter that passes high frequencies and rejects
 low frequencies. For this filter,
 \begin{equation*}
-    T\left( \omega \right) \approx \begin{cases}
+    T\left( \omega \right) \approx
+    \begin{cases}
         1 & \omega > \omega_c \\
         0 & \omega < \omega_c
     \end{cases}
     \qquad \text{and} \qquad
-    R\left( \omega \right) \approx \begin{cases}
+    R\left( \omega \right) \approx
+    \begin{cases}
         0 & \omega > \omega_c \\
         1 & \omega < \omega_c
     \end{cases}
@@ -2047,67 +2051,72 @@ A band pass filter is a filter that passes frequencies within a certain
 bandwidth \(\Delta{\omega}\) and rejects frequencies outside this
 bandwidth. For this filter,
 \begin{equation*}
-    T\left( \omega \right) \approx \begin{cases}
+    T\left( \omega \right) \approx
+    \begin{cases}
         1 & \abs*{\omega - \omega_0} < \frac{\Delta{\omega}}{2} \\
         0 & \abs*{\omega - \omega_0} > \frac{\Delta{\omega}}{2}
     \end{cases}
     \qquad \text{and} \qquad
-    R\left( \omega \right) \approx \begin{cases}
+    R\left( \omega \right) \approx
+    \begin{cases}
         0 & \abs*{\omega - \omega_0} < \frac{\Delta{\omega}}{2} \\
         1 & \abs*{\omega - \omega_0} > \frac{\Delta{\omega}}{2}
     \end{cases}
 \end{equation*}
 where \(\omega_0\) is the centre frequency of the filter.
 \subsubsection{Band Stop Filters}
-A band stop filter is a filter that rejects frequencies within a certain
-bandwidth \(\Delta{\omega}\) and passes frequencies outside this
-bandwidth. For this filter,
+A band stop filter is a filter that rejects frequencies within a
+certain bandwidth \(\Delta{\omega}\) and passes frequencies outside
+this bandwidth. For this filter,
 \begin{equation*}
-    T\left( \omega \right) \approx \begin{cases}
+    T\left( \omega \right) \approx
+    \begin{cases}
         0 & \abs*{\omega - \omega_0} < \frac{\Delta{\omega}}{2} \\
         1 & \abs*{\omega - \omega_0} > \frac{\Delta{\omega}}{2}
     \end{cases}
     \qquad \text{and} \qquad
-    R\left( \omega \right) \approx \begin{cases}
+    R\left( \omega \right) \approx
+    \begin{cases}
         1 & \abs*{\omega - \omega_0} < \frac{\Delta{\omega}}{2} \\
         0 & \abs*{\omega - \omega_0} > \frac{\Delta{\omega}}{2}
     \end{cases}
 \end{equation*}
 where \(\omega_0\) is the centre frequency of the filter.
 \subsubsection{Filter Bandwidth}
-The vast majority of microwave filters are bandpass filters. These filters
-are characterised by their \textbf{percentage bandwidth} defined as
+The vast majority of microwave filters are bandpass filters. These
+filters are characterised by their \textbf{percentage bandwidth}
+defined as
 \begin{equation*}
     \%\mathrm{BW} = \frac{\Delta{f}}{f_0} \times 100\%.
 \end{equation*}
 where \(\Delta{f}\) is the bandwidth and \(f_0\) is the centre frequency.
 
-Bandpass filters are classified as either narrowband or wideband filters,
-depending on either the percentage bandwidth or the technology used to
-construct the filters.
+Bandpass filters are classified as either narrowband or wideband
+filters, depending on either the percentage bandwidth or the technology
+used to construct the filters.
 \begin{itemize}
     \item \textbf{Percentage bandwidth}: A percentage bandwidth less
-    than 10\%, is considered a \textbf{narrowband} filter.
+          than 10\%, is considered a \textbf{narrowband} filter.
     \item \textbf{Technology used to construct the filter}: If the filter
-    is constructed using lumped and/or distributed elements (e.g.,
-    inductors, capacitors, transmission lines), it is considered a
-    \textbf{narrowband} filter. Note that it is difficult to achieve
-    small percentage bandwidths (less than 3\%) using these elements.
+          is constructed using lumped and/or distributed elements (e.g.,
+          inductors, capacitors, transmission lines), it is considered a
+          \textbf{narrowband} filter. Note that it is difficult to achieve
+          small percentage bandwidths (less than 3\%) using these elements.
 \end{itemize}
 For very narrowband filters, we must use high-Q resonators such as dielectric
 cavities, crystals, or SAWs, though achieving a percentage bandwidth of
 less than 0.1\% is difficult.
 \subsubsection{Filter Phase Function}
-The phase function of a filter is defined as the phase of the scattering
-parameter \(S_{21}\) as a function of frequency,
+The phase function of a filter is defined as the phase of the
+scattering parameter \(S_{21}\) as a function of frequency,
 \begin{equation*}
     \angle S_{21} = \arctan{\left( \frac{\Im{\left( S_{21} \right)}}{\Re{\left( S_{21} \right)}} \right)}.
 \end{equation*}
 Given an incident wave \(V_1^+ \left( z_1 \right) = V_{01}^+ e^{-j \beta z}\),
 the output wave is given by
 \begin{align*}
-    V_2^- \left( z_2 \right) & = V_{02}^- e^{j \beta z_2} \\
-                             & = S_{21} V_{01}^- e^{j \beta z_2} \\
+    V_2^- \left( z_2 \right) & = V_{02}^- e^{j \beta z_2}                                              \\
+                             & = S_{21} V_{01}^- e^{j \beta z_2}                                       \\
                              & = \abs*{S_{21}} V_{01}^- e^{j \left( \beta z_2 + \angle S_{21} \right)}
 \end{align*}
 This phase shift is created by the propagation delay of the filter.
@@ -2120,8 +2129,8 @@ which implies that a constant phase shift corresponds to a constant delay.
 
 If different frequencies propagate at different velocities through a
 microwave filter (each frequency has a different delay), the output
-signal will be distored. This phenomenon is known as \textbf{dispersion},
-and this can be calculated using the phase delay
+signal will be distored. This phenomenon is known as
+\textbf{dispersion}, and this can be calculated using the phase delay
 (\(\Delta \angle S_{21}\)) and signal bandwidth \(2\pi B_s\). When
 \begin{equation*}
     B_s \Delta \angle S_{21} \ll 1
@@ -2158,4 +2167,398 @@ For bandpass and bandstop filters:
 \end{itemize}
 where \(f_0 = \sqrt{f_L f_H}\) is the centre frequency, and
 \(\Delta = \frac{f_H - f_L}{f_0}\) is the percentage bandwidth.
+\subsection{Receiver Design}
+A receiver is a device that receives a signal from an antenna and
+converts it to a form suitable for further processing.
+\subsubsection{General Requirements}
+A receiver must meet the following general requirements:
+\begin{itemize}
+    \item \textbf{High Gain}: A gain of around \qty{100}{dB} used to amplify \qty{10}{\micro V} signals to \qty{1}{V}.
+          In a \qty{50}{\ohm} system, this corresponds to a gain of \qty{-87}{dBm} to \qty{13}{dBm}.
+    \item \textbf{Good Selectivity}: Ability to reject adjacent channel signals, image frequencies and interference.
+          For example, AM requires a channel spacing of \qty{9}{kHz}, while FM requires a channel spacing of \qty{200}{kHz}.
+    \item \textbf{Good Sensitivity}: Ability to discern weak signals. Receiver noise must be less than \qty{1}{\micro V}, with an SNR of at least \qty{20}{dB}.
+    \item \textbf{Large Dynamic Range}: Ability to operate properly when the received signal amplitude varies.
+\end{itemize}
+and the following application specific requirements:
+\begin{itemize}
+    \item \textbf{EMC Compliance}: Minimal RFI emissions and adequate immunity.
+    \item \textbf{Compliance to Specific Standards}: Varies depending on application.
+    \item \textbf{Other Requirements}: Physical, environmental, power, etc.
+\end{itemize}
+\subsubsection{Superheterodyne Receivers}
+A superheterodyne receiver is a receiver that tunes the received signal
+frequency to a fixed intermediate frequency (IF) using a tunable local
+oscillator (LO). The advantages of this receiver are that amplification
+and filtering occurs at a fixed IF frequency, which sits lower than the
+signal frequency allowing for high gain and sharp cut-off
+characteristics when filtering.
+
+We use the following terms to describe the superheterodyne receiver:
+\begin{itemize}
+    \item \textbf{Down Conversion}: The IF frequency is lower than the received signal frequency.
+    \item \textbf{Up Conversion}: The IF frequency is higher than the received signal frequency.
+    \item \textbf{Single Conversion}: Only one mixer stage, giving one IF frequency.
+    \item \textbf{Double Conversion}: Two mixer stages, giving two IF frequencies.
+    \item \textbf{Triple Conversion}: Three mixer stages, giving three IF frequencies.
+\end{itemize}
+The IF filter must be able to filter adjacent channels with an
+attenuation between \qty{30}{dB} and \qty{60}{dB}.
+When down converting a signal,
+\begin{equation*}
+    \abs*{f_s - f_{\mathrm{LO}}} = f_{\mathrm{IF}}
+\end{equation*}
+or in other words,
+\begin{itemize}
+    \item \textbf{Low-side tuning}: The LO frequency is lower than the desired signal frequency.
+          \begin{equation*}
+              f_{\mathrm{LO}} = f_s - f_{\mathrm{IF}}
+          \end{equation*}
+          which has a lower cost, higher output power, and better frequency accuracy.
+    \item  \textbf{High-side tuning}: The LO frequency is higher than the desired signal frequency.
+          \begin{equation*}
+              f_{\mathrm{LO}} = f_s + f_{\mathrm{IF}}
+          \end{equation*}
+          which requires a smaller percentage bandwidth, and results in lower phase noise.
+\end{itemize}
+\subsection{Spurious Signals}
+As discussed in the previous section, the mixer will produce many
+spurious frequencies. These frequencies are of particular importance,
+as they will pass through the IF filter. Let us consider first, second,
+and third-order spurious frequencies.
+\subsubsection{First-Order Frequencies}
+The first-order frequency that can pass through the IF filter is the IF
+frequency itself \(f_{\mathrm{RF}} = f_{\mathrm{IF}}\).
+\subsubsection{Second-Order Frequencies}
+Second-order spurious frequencies are called \textbf{image
+frequencies}, \(f_{\mathrm{image}} \neq f_s\) that satisfy
+\begin{equation*}
+    f_{\mathrm{IF}} = \abs*{f_{\mathrm{image}} - f_{\mathrm{LO}}}
+\end{equation*}
+where \(f_{\mathrm{IF}}\) is fixed, and \(f_{\mathrm{LO}}\) is either
+high side or low side tuned. This leads to the following two cases:
+\begin{itemize}
+    \item In \textbf{low-side tuning}
+          \begin{equation*}
+              f_{\mathrm{LO}} = f_s - f_{\mathrm{IF}}
+          \end{equation*}
+          so that
+          \begin{equation*}
+              f_{\mathrm{IF}} =
+              \begin{cases}
+                  f_{\mathrm{image}} - \left( f_s - f_{\mathrm{IF}} \right) & f_{\mathrm{image}} > f_{\mathrm{LO}} \\
+                  \left( f_s - f_{\mathrm{IF}} \right) - f_{\mathrm{image}} & f_{\mathrm{image}} < f_{\mathrm{LO}}
+              \end{cases}
+          \end{equation*}
+          which results in an image frequency at \(f_{\mathrm{image}} = f_s - 2f_{\mathrm{IF}}\).
+    \item In \textbf{high-side tuning}
+          \begin{equation*}
+              f_{\mathrm{LO}} = f_s + f_{\mathrm{IF}}
+          \end{equation*}
+          so that
+          \begin{equation*}
+              f_{\mathrm{IF}} =
+              \begin{cases}
+                  f_{\mathrm{image}} - \left( f_s + f_{\mathrm{IF}} \right) & f_{\mathrm{image}} > f_{\mathrm{LO}} \\
+                  \left( f_s + f_{\mathrm{IF}} \right) - f_{\mathrm{image}} & f_{\mathrm{image}} < f_{\mathrm{LO}}
+              \end{cases}
+          \end{equation*}
+          which results in an image frequency at \(f_{\mathrm{image}} = f_s + 2f_{\mathrm{IF}}\).
+\end{itemize}
+In general, this frequency satisfies
+\begin{equation*}
+    \abs*{f_{\mathrm{image}} - f_s} = 2f_{\mathrm{IF}}
+\end{equation*}
+This is particularly problematic as second order terms have a significant
+effect on the output. In addition to this, we must never select the LO
+frequency to be equal to the IF frequency, as it will pass unimpeded
+through the IF filter.
+\subsubsection{Third-Order Frequencies}
+If we consider third-order terms, we also find a similar problem. The
+third-order terms of particular significance are the ones nearest to
+the desired signal frequency, namely
+\begin{equation*}
+    \abs*{2 f_{\mathrm{RF}} - f_{\mathrm{LO}}} = f_{\mathrm{IF}} \qquad \text{and} \qquad \abs*{2 f_{\mathrm{LO}} - f_{\mathrm{RF}}} = f_{\mathrm{IF}}
+\end{equation*}
+Again, we can consider the two cases of low-side and high-side tuning:
+\begin{itemize}
+    \item In \textbf{low-side tuning}
+          \begin{equation*}
+              f_{\mathrm{LO}} = f_s - f_{\mathrm{IF}}
+          \end{equation*}
+          so that
+          \begin{equation*}
+              f_{\mathrm{IF}} =
+              \begin{cases}
+                  2 f_{\mathrm{RF}} - \left( f_s - f_{\mathrm{IF}} \right) & 2 f_{\mathrm{RF}} > f_{\mathrm{LO}} \\
+                  \left( f_s - f_{\mathrm{IF}} \right) - 2 f_{\mathrm{RF}} & 2 f_{\mathrm{RF}} < f_{\mathrm{LO}} \\
+                  2 \left( f_s - f_{\mathrm{IF}} \right) - f_{\mathrm{RF}} & 2 f_{\mathrm{LO}} > f_{\mathrm{RF}} \\
+                  f_{\mathrm{RF}} - 2 \left( f_s - f_{\mathrm{IF}} \right) & 2 f_{\mathrm{LO}} < f_{\mathrm{RF}}
+              \end{cases}
+          \end{equation*}
+          which results in four frequencies at
+          \begin{align*}
+              f_{\mathrm{RF}} & = \frac{f_s}{2}                     \\
+              f_{\mathrm{RF}} & = \frac{f_s - 2 f_{\mathrm{IF}}}{2} \\
+              f_{\mathrm{RF}} & = 2 f_s - 3 f_{\mathrm{IF}}         \\
+              f_{\mathrm{RF}} & = 2 f_s - f_{\mathrm{IF}}
+          \end{align*}
+          where the most significant are the first and third frequencies.
+    \item In \textbf{high-side tuning}
+          \begin{equation*}
+              f_{\mathrm{LO}} = f_s + f_{\mathrm{IF}}
+          \end{equation*}
+          so that
+          \begin{equation*}
+              f_{\mathrm{IF}} =
+              \begin{cases}
+                  2 f_{\mathrm{RF}} - \left( f_s + f_{\mathrm{IF}} \right) & 2 f_{\mathrm{RF}} > f_{\mathrm{LO}} \\
+                  \left( f_s + f_{\mathrm{IF}} \right) - 2 f_{\mathrm{RF}} & 2 f_{\mathrm{RF}} < f_{\mathrm{LO}} \\
+                  2 \left( f_s + f_{\mathrm{IF}} \right) - f_{\mathrm{RF}} & 2 f_{\mathrm{LO}} > f_{\mathrm{RF}} \\
+                  f_{\mathrm{RF}} - 2 \left( f_s + f_{\mathrm{IF}} \right) & 2 f_{\mathrm{LO}} < f_{\mathrm{RF}}
+              \end{cases}
+          \end{equation*}
+          which results in four frequencies at
+          \begin{align*}
+              f_{\mathrm{RF}} & = \frac{f_s + 2 f_{\mathrm{IF}}}{2} \\
+              f_{\mathrm{RF}} & = \frac{f_s}{2}                     \\
+              f_{\mathrm{RF}} & = 2 f_s + f_{\mathrm{IF}}           \\
+              f_{\mathrm{RF}} & = 2 f_s + 3 f_{\mathrm{IF}}
+          \end{align*}
+          where the most significant are the first and third frequencies.
+\end{itemize}
+\subsubsection{Rejecting Spurious Signals}
+As suggested above, we can reject spurious signals, using a
+\textbf{preselector filter} which is a bandpass filter centred around
+the desired signal frequency. It is important to consider the bandwidth
+of the preselector filter, as it must be wide enough to pass the signal
+entirely, but narrow enough to reject the spurious signals.
+
+An important parameter is the IF frequency itself, when rejecting
+second-order frequencies, we may increase the IF frequency to increase
+the distance between the desired signal frequency and the image
+frequency, making it easier to filter out. However, when rejecting some
+third-order frequencies, it may be better to decrease the IF frequency.
+Clearly we must choose an IF frequency that is a compromise between
+these two requirements.
+\subsubsection{Up Conversion}
+Instead of down converting the signal, we can also up convert the
+signal to only produce one image frequency, and fewer third-order
+spurious frequencies, by considering
+\begin{equation*}
+    f_{\mathrm{IF}} = f_{\mathrm{RF}} + f_{\mathrm{LO}}
+\end{equation*}
+Despite this advantage, we must also consider the cost and complexity
+implications of designing an IF filter at a higher frequency than the
+desired frequency.
+\subsection{Noise}
+The noise level of a system sets the lower limit on the strength of a
+signal that can be detected in the presense of noise. Noise can be
+attributed to several sources:
+\begin{itemize}
+    \item \textbf{Thermal noise} --- caused by thermal vibration of bound
+          charges.
+    \item \textbf{Shot noise} --- caused by random fluctuations of
+          charge carriers in an electron tube or solid-state device.
+    \item \textbf{Flicker noise} --- occurs in solid-state components and
+          vacuum tubes. Flicker noise power varies inversely with frequency.
+    \item \textbf{Plasma noise} --- caused by random motion of charges in
+          an ionized gas, e.g., a plasma, the ionosphere or sparking electrical
+          contacts.
+    \item \textbf{Quantum noise} --- caused by quantized nature of charge
+          carriers and photons. Usually insignificant relative to other noise
+          sources.
+\end{itemize}
+\subsubsection{Thermal Noise}
+Thermal noise is the most significant source of noise in a device. The
+RMS voltage of thermal noise is given by
+\begin{equation*}
+    V_{\mathrm{noise}} = \sqrt{4 k_B T R B}
+\end{equation*}
+where \(k_B\) is the Boltzmann constant, \(T\) is the temperature in
+\unit{K}, \(R\) is the resistance in \unit{\ohm}, and \(B\) is the
+bandwidth in \unit{Hz}. Using a Thevenin equivalent circuit consisting
+of a noiseless resistor with resistance \(R\) and voltage source
+\(V_{\mathrm{noise}}\), the maxmimum noise power transfer from the noisy
+resistor to a load resistor \(R_L = R\) is given by
+\begin{equation*}
+    N_\mathrm{out} = P_{\mathrm{noise}} = \frac{V_{\mathrm{noise}}^2}{4R_L} = k_B T B
+\end{equation*}
+measured as a dimensionless quantity. Therefore noise power is
+independent of resistance and is proportional to temperature and bandwidth.
+\subsubsection{Equivalent Noise Temperature}
+The equivalent noise temperature \(T_e\) (\unit{K}) describes the noise
+generated by a device relative to the noise generated by a resistor at
+room temperature. It is the noise power of the device in the absense of
+noise at the input (input noise power is zero). It is defined as
+\begin{equation*}
+    T_e = \frac{N_\mathrm{out}}{k_B B}
+\end{equation*}
+where \(N_\mathrm{out}\) is the output noise power of the device. For an \textbf{amplifier}
+with gain \(G\), the output noise power is given by
+\begin{equation*}
+    N_\mathrm{out} = G k_B T_e B
+\end{equation*}
+and therefore the equivalent noise temperature is given by
+\begin{equation*}
+    T_e = \frac{N_\mathrm{out}}{G k_B B}.
+\end{equation*}
+An alternative specification for output noise is the \textbf{excess
+    noise ratio} (ENR), which is the relative difference between the noise
+temperature of a device and room temperature \(T_0\) (which is typically
+specified as \qty{290}{K}), so that
+\begin{equation*}
+    \mathrm{ENR} = \frac{T_e - T_0}{T_0}.
+\end{equation*}
+\subsubsection{Measuring Noise Temperature}
+To measure the equivalent noise temperature of a device, we must
+measure the output noise power at a hot ambient temperature \(T_h\),
+and at a cold ambient temperature \(T_c\). The output noise power is
+then
+\begin{align*}
+    N_{\mathrm{out,hot}}  & = G k_B \left( T_h + T_e \right) B \\
+    N_{\mathrm{out,cold}} & = G k_B \left( T_c + T_e \right) B
+\end{align*}
+Then by calculating the \(Y\)-factor, we can determine \(T_e\)
+experimentally.
+\begin{align*}
+    Y = \frac{N_{\mathrm{out,hot}}}{N_{\mathrm{out,cold}}} & = \frac{T_h + T_e}{T_c + T_e} \\
+    T_e                                                    & = \frac{T_h - Y T_c}{Y - 1}
+\end{align*}
+This method is accurate when \(Y \gg 1\), and hence \(T_c\) must be as
+small as possible, and \(T_h\) must be as large as possible.
+\subsubsection{Noise Figure}
+The \textbf{noise figure} \(F\) of a device is the ratio of the input
+signal-to-noise ratio to the output signal-to-noise ratio, so that
+\begin{equation*}
+    F = \frac{\mathrm{SNR}_\mathrm{in}}{\mathrm{SNR}_\mathrm{out}} = \frac{S_\mathrm{in} / N_\mathrm{in}}{S_\mathrm{out} / N_\mathrm{out}}.
+\end{equation*}
+For a two-port network, the input noise power is given by
+\begin{equation*}
+    N_\mathrm{in} = k_B T_p B
+\end{equation*}
+where \(T_p\) is the physical temperature of the device. The output
+noise power is then the sum of the input noise power and the noise
+generated by the device, so that
+\begin{equation*}
+    N_\mathrm{out} = G N_\mathrm{in} + G k_B T_e B = G k_B \left( T_p + T_e \right) B
+\end{equation*}
+Noise figure can then be related to equivalent noise temperature as follows,
+\begin{align*}
+    F & = \frac{S_\mathrm{in} / N_\mathrm{in}}{S_\mathrm{out} / N_\mathrm{out}}                    \\
+      & = \frac{S_\mathrm{in}}{k_B T_p B} \frac{G k_B \left( T_p + T_e \right) B}{G S_\mathrm{in}} \\
+      & = \frac{T_p + T_e}{T_p}                                                                    \\
+      & = 1 + \frac{T_e}{T_p}
+\end{align*}
+Note that noise figure is typically measured at room temperature, so
+that \(T_p = T_0\), and therefore
+\begin{equation*}
+    F = 1 + \frac{T_e}{T_0}.
+\end{equation*}
+Solving for equivalent noise temperature, we find that
+\begin{equation*}
+    T_e = \left( F - 1 \right) T_0.
+\end{equation*}
+\subsubsection{Noise Figure of Cascaded Devices}
+In a receiver system, consider some devices \(i\) with gain \(G_i\),
+equivalent noise temperature \(T_i\), and bandwidth \(B_i\). The input
+of the first device is connected to a source with ambient temperature
+\(T_0\), so that the input noise power \(N_\mathrm{in}\) is given by
+\begin{equation*}
+    N_\mathrm{in} = k_B T_0 B_1.
+\end{equation*}
+The output noise power of the first device \(N_1\) is given by
+\begin{align*}
+    N_1 & = G_1 N_\mathrm{in} + G_1 k_B T_1 B_1   \\
+        & = G_1 k_B \left( T_0 + T_1 \right) B_1.
+\end{align*}
+The output noise power of the second device \(N_2\) is then given by
+\begin{align*}
+    N_2 & = G_2 N_1 + G_2 k_B T_2 B_2                                           \\
+        & = G_1 G_2 k_B \left( T_0 + T_1 \right) B_1 + G_2 k_B T_2 B_2          \\
+        & = G_1 G_2 k_B \left( T_0 B_1 + T_1 B_1 + \frac{T_2 B_2}{G_1} \right).
+\end{align*}
+For a system with \(n>0\) cascaded devices, the output noise power is given by
+\begin{align*}
+    N_n & = \left( \prod_{i=1}^n G_i \right) k_B \left( T_0 B_1 + \sum_{i=1}^n \frac{T_i B_i}{\prod_{j=1}^{i-1} G_j} \right)                                                                                                       \\
+        & = \underbrace{\left( \prod_{i=1}^n G_i \right) k_B T_0 B_1}_{\text{noise from source}} + \underbrace{\left( \prod_{i=1}^n G_i \right) k_B \sum_{i=1}^n \frac{T_i B_i}{\prod_{j=1}^{i-1} G_j}}_{\text{noise from system}}
+\end{align*}
+When the bandwidth \(B\) is the same for all devices, the output noise
+power is given by
+\begin{align*}
+    N_n & = \left( \prod_{i=1}^n G_i \right) k_B \left( T_0 + \sum_{i=1}^n \frac{T_i}{\prod_{j=1}^{i-1} G_j} \right) B                                                                                                         \\
+        & = \underbrace{\left( \prod_{i=1}^n G_i \right) k_B T_0 B}_{\text{noise from source}} + \underbrace{\left( \prod_{i=1}^n G_i \right) k_B \sum_{i=1}^n \frac{T_i B}{\prod_{j=1}^{i-1} G_j}}_{\text{noise from system}}
+\end{align*}
+The equivalent noise temperature \(T_e\) of the system can be found by considering
+the system as a single device with gain \(G = \prod_{i=1}^n G_i\) and
+output noise power \(N_\mathrm{out}\), so that
+\begin{equation*}
+    N_\mathrm{out} = G N_\mathrm{in} + G k_B T_e B = G k_B \left( T_0 + T_e \right) B.
+\end{equation*}
+Equating this with \(N_n\) shows that
+\begin{align*}
+    G k_B \left( T_0 B_1 + \sum_{i=1}^n \frac{T_i B_i}{\prod_{j=1}^{i-1} G_j} \right)       & = G k_B \left( T_0 + T_e \right) B                                                                           \\
+    \frac{1}{B} \left( T_0 B_1 + \sum_{i=1}^n \frac{T_i B_i}{\prod_{j=1}^{i-1} G_j} \right) & = T_0 + T_e                                                                                                  \\
+    T_e                                                                                     & = \frac{1}{B} \left( T_0 \left( B_1 - B \right) + \sum_{i=1}^n \frac{T_i B_i}{\prod_{j=1}^{i-1} G_j} \right)
+\end{align*}
+and when \(B\) is the same for all devices,
+\begin{equation*}
+    T_e = \sum_{i=1}^n \frac{T_i}{\prod_{j=1}^{i-1} G_j}.
+\end{equation*}
+The noise figure of the system is then given by
+\begin{align*}
+    \left( F - 1 \right) T_0 & = \frac{1}{B} \left( T_0 \left( B_1 - B \right) + \sum_{i=1}^n \frac{\left( F_i - 1 \right) T_0 B_i}{\prod_{j=1}^{i-1} G_j} \right)                                                                                   \\
+    F - 1                    & = \frac{1}{B} \left( B_1 - B + \sum_{i=1}^n \frac{\left( F_i - 1 \right) B_i}{\prod_{j=1}^{i-1} G_j} \right)                                                                                                          \\
+    F                        & = \frac{1}{B} \left( B_1 + \sum_{i=1}^n \frac{\left( F_i - 1 \right) B_i}{\prod_{j=1}^{i-1} G_j} \right) = \frac{1}{B} \left( F_1 B_1 + \sum_{i=2}^n \frac{\left( F_i - 1 \right) B_i}{\prod_{j=1}^{i-1} G_j} \right)
+\end{align*}
+and when \(B\) is the same for all devices,
+\begin{equation*}
+    F = 1 + \sum_{i=1}^n \frac{F_i - 1}{\prod_{j=1}^{i-1} G_j} = F_1 + \sum_{i=2}^n \frac{F_i - 1}{\prod_{j=1}^{i-1} G_j}
+\end{equation*}
+\subsubsection{Antenna Noise}
+Similar to the equivalent noise temperature of a resistor, the
+equivalent noise temperature of an antenna \(T_A\) is defined as
+\begin{equation*}
+    T_A = \eta T_b + \left( 1 - \eta \right) T_p
+\end{equation*}
+where \(T_b\) is the average background brightness temperature of the antenna\footnote{
+    The background brightness temperature is the equivalent noise
+    temperature of a resistor required to produce the same noise power as
+    the environment seen by the antenna. It indicates the amount of
+    electromagnetic noise in the environment. As the background brightness
+    temperature is direction dependent, the average background brightness
+    temperature \(T_b\) is used.
+}, \(T_p\) is the physical temperature of the antenna, and \(\eta\) is the
+antenna efficiency.
+The output noise power of an antenna is given by
+\begin{equation*}
+    N_A = k_B T_A B = k_B \left( \eta T_b + \left( 1 - \eta \right) T_p \right) B.
+\end{equation*}
+The signal-to-noise ratio at the point where the antenna feeds the
+receiver is given by
+\begin{equation*}
+    \mathrm{SNR} = \frac{P_\mathrm{Rx}}{N_A} = \left( \frac{G_\mathrm{Rx}}{T_A} \right) \frac{G_\mathrm{Tx} P_\mathrm{Tx}}{k_B B} \left( \frac{\lambda}{4 \pi r} \right)^2
+\end{equation*}
+using the Friis transmission equation, which states
+\begin{equation*}
+    \frac{P_\mathrm{Rx}}{P_\mathrm{Tx}} = G_\mathrm{Tx} G_\mathrm{Rx} \left( \frac{\lambda}{4 \pi r} \right)^2.
+\end{equation*}
+This suggests that a receiver with a better \(G/T\) ratio performs better.
+\subsubsection{Noise Figure of a System}
+Given the noise power from an antenna, the total input noise power is
+given by
+\begin{equation*}
+    N_\mathrm{in}^\mathrm{total} = N_A + N_\mathrm{out} = k_B \left( T_A + T_e \right) B
+\end{equation*}
+therefore the total output noise power of the antenna and receiver
+is given by
+\begin{equation*}
+    N_\mathrm{out}^\mathrm{total} = G N_\mathrm{in}^\mathrm{total} = G k_B \left( T_A + T_e \right) B.
+\end{equation*}
+\subsubsection{Transmission Line Noise}
+Transmission lines are used to connect RF components together and
+typically degrade the power of a signal. This is specified as a loss \(L\),
+which is inversely proportional to the gain. Therefore, we can treat
+transmission lines as a device with gain \(G = 1/L\) and noise figure
+\(F = L\).
 \end{document}
