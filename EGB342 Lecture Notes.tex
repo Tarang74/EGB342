@@ -106,7 +106,7 @@ where
 The transmitter carries out \textbf{signal conditioning} by
 transforming the signal to a more appropriate form before transmission
 through the channel. Some examples of signal conditioning techniques
-are prodived below.
+are provided below.
 \begin{itemize}
     \item \textbf{Low Pass Filtering} (LPF) restricts signal bandwidth
           to avoid wasting signal power on frequencies that are not
@@ -174,7 +174,7 @@ Many kinds of message signals can be considered:
     \item Computer data
     \item Telemetry (measurements)
     \item Soundings (RADAR, SONAR)
-    \item A mixure of the above (i.e., data over voice)
+    \item A mixture of the above (i.e., data over voice)
 \end{itemize}
 \subsection{Modulation}
 The process of modulation produces a signal that is suitable for
@@ -630,7 +630,7 @@ The time varying capacitance of the varactor diode is given by
 \end{itemize}
 Narrowband FM can be converted to wideband using a
 narrowband-to-wideband convertor by multiplying the frequencies of the
-narrowhand signal.
+narrowband signal.
 \subsection{Demodulating Angle Modulated Signals}
 FM demodulators are implemented by generating an AM signal whose
 amplitude is proportional to the instantaneous frequency of the FM
@@ -908,13 +908,13 @@ where \(k = \qty{1.380649e-23}{J.K^{-1}}\) is Boltzmann's constant and
 \(T\) is the temperature in Kelvin. At room temperature,
 \(20^{\circ}C\), \(N_0 = \qty{4e-21}{W} = \qty{-174}{dBm}\).
 \subsection{Binary Transceiver}
-In a simple binary transciever, bits are represented by impulses, where
+In a simple binary transceiver, bits are represented by impulses, where
 each pulse is one bit duration \(T_b\) apart. These pulses are then
 converted into an appropriate waveform for transmission, i.e., as a
 rectangular, since, raised cosine, Gaussian, etc., pulse shape.
 
 The receiver can then detect these pulses by sampling the received
-signal at the center of each bit period, where the voltage of the
+signal at the centre of each bit period, where the voltage of the
 signal is either positive or negative, corresponding to a 1 or 0.
 
 However, this fails in the presence of noise, and we must consider
@@ -968,7 +968,7 @@ where \(\hat{n}\left( t \right)\) is also a Gaussian random process.
 Using the test statistic \(r\), we can then make a decision regarding
 the transmitted symbol, by comparing \(r\) with a particular threshold.
 \subsection{Matched Filter}
-The filter corresponding to the corellator is called the matched
+The filter corresponding to the correlator is called the matched
 filter. The matched filter is a linear filter that maximises the SNR at
 a particular sampling time (typically at the end of the bit period).
 \begin{equation*}
@@ -1641,7 +1641,7 @@ amplifier or transistor, and a resonator. An example is the LC network,
 which consists of an amplifier with a feedback path consisting of a
 capacitor and inductor in series. Under proper conditions, this device
 will be unstable, and resonate. The particular frequency at which the
-resontator oscillates is called the \textbf{resonant frequency}. For
+resonator oscillates is called the \textbf{resonant frequency}. For
 the LC network, this is
 \begin{equation*}
     \omega_0 = \frac{1}{\sqrt{LC}}.
@@ -1649,9 +1649,8 @@ the LC network, this is
 Ideally, a perfect resonator will resonate precisely at \(\omega_0\),
 however, in practice, the oscillating frequency is spread around the
 resonant frequency. By performing \textbf{spectral analysis}
-(power vs. frequency) on the output of the oscillator, we can see that
-energy is spread over a range of frequencies centered around \(\omega_0\).
-
+(power vs.\ frequency) on the output of the oscillator, we can see that
+energy is spread over a range of frequencies centred around \(\omega_0\).
 The \textbf{bandwidth} of the output spectrum relates to the
 \textbf{quality} of the resonator.
 \begin{itemize}
@@ -1680,14 +1679,13 @@ voltage. The resonant frequency is given by
 \subsubsection{Harmonics and Spurs}
 Oscillators also produce other frequencies not at the resonant
 frequency. These occur at integer multiples of \(\omega_0\) called
-\textbf{harmonics} or aribtrarily at other frequencies called spurious
+\textbf{harmonics} or arbitrarily at other frequencies called spurious
 frequencies (\textbf{spurs}).
-
 As the power of these frequencies is typically much lower than the
-resonant frequency, we often measure them in \textbf{dBc} (decibels
+resonant frequency, we often measure them in \textbf{dB.c} (decibels
 relative to the carrier power \(P_c\)).
 \begin{equation*}
-    P (\unit{dBc}) = 10 \log_{10}{\left( \frac{P}{P_c} \right)}
+    P (\unit{dB.c}) = 10 \log_{10}{\left( \frac{P}{P_c} \right)}
 \end{equation*}
 \subsubsection{Phase Noise}
 Consider the signal
@@ -1728,7 +1726,7 @@ Therefore an oscillator is designed assuming that the load is matched,
 i.e., \(\Gamma_L = 0\). Frequency pulling is specified as the maximum
 deviation from the nominal frequency given some worst case load.
 
-Frequency pulling can be minimsed by isolating the oscillator from the
+Frequency pulling can be minimised by isolating the oscillator from the
 load, using an \textbf{isolation amplifier}.
 
 Frequency pushing is similar to frequency pulling, where the supply
@@ -1779,7 +1777,7 @@ so that
     \end{aligned}
 \end{equation*}
 By considering the output from each coefficient, we can can identify the
-freqencies produced at the output of the mixer.
+frequencies produced at the output of the mixer.
 \begin{itemize}
     \item 1st order terms:
           \begin{equation*}
@@ -1819,7 +1817,7 @@ temperature by
     \item having a very low noise figure
 \end{itemize}
 As this amplifier receives a high frequency signal, it requires
-impedance matching at the input and output stages of the RF transitor
+impedance matching at the input and output stages of the RF transistor
 (to obtain the minimal noise figure), and therefore high gain is usually
 not achieved.
 \subsubsection{Impedance Matching}
@@ -1848,7 +1846,7 @@ the amplifier. This noise floor is dependent on the operating
 temperature of the amplifier and the construction of the amplifier. The
 upper limit of the dynamic range is the \textbf{1dB compression point}
 at which the amplifier output power is 1dB below the typical linear
-output gain. The amplifer enters the saturation region beyond this
+output gain. The amplifier enters the saturation region beyond this
 point.
 \subsubsection{Amplifier Non-Linearity}
 Ideally amplifiers should provide the same gain for a wide range of
@@ -2129,7 +2127,7 @@ which implies that a constant phase shift corresponds to a constant delay.
 
 If different frequencies propagate at different velocities through a
 microwave filter (each frequency has a different delay), the output
-signal will be distored. This phenomenon is known as
+signal will be distorted. This phenomenon is known as
 \textbf{dispersion}, and this can be calculated using the phase delay
 (\(\Delta \angle S_{21}\)) and signal bandwidth \(2\pi B_s\). When
 \begin{equation*}
@@ -2188,7 +2186,7 @@ and the following application specific requirements:
 \end{itemize}
 \subsubsection{Superheterodyne Receivers}
 A superheterodyne receiver is a receiver that tunes the received signal
-frequency to a fixed intermediate frequency (IF) using a tunable local
+frequency to a fixed intermediate frequency (IF) using a tuneable local
 oscillator (LO). The advantages of this receiver are that amplification
 and filtering occurs at a fixed IF frequency, which sits lower than the
 signal frequency allowing for high gain and sharp cut-off
@@ -2353,7 +2351,7 @@ implications of designing an IF filter at a higher frequency than the
 desired frequency.
 \subsection{Noise}
 The noise level of a system sets the lower limit on the strength of a
-signal that can be detected in the presense of noise. Noise can be
+signal that can be detected in the presence of noise. Noise can be
 attributed to several sources:
 \begin{itemize}
     \item \textbf{Thermal noise} --- caused by thermal vibration of bound
@@ -2379,7 +2377,7 @@ where \(k_B\) is the Boltzmann constant, \(T\) is the temperature in
 \unit{K}, \(R\) is the resistance in \unit{\ohm}, and \(B\) is the
 bandwidth in \unit{Hz}. Using a Thevenin equivalent circuit consisting
 of a noiseless resistor with resistance \(R\) and voltage source
-\(V_{\mathrm{noise}}\), the maxmimum noise power transfer from the noisy
+\(V_{\mathrm{noise}}\), the maximum noise power transfer from the noisy
 resistor to a load resistor \(R_L = R\) is given by
 \begin{equation*}
     N_\mathrm{out} = P_{\mathrm{noise}} = \frac{V_{\mathrm{noise}}^2}{4R_L} = k_B T B
@@ -2389,7 +2387,7 @@ independent of resistance and is proportional to temperature and bandwidth.
 \subsubsection{Equivalent Noise Temperature}
 The equivalent noise temperature \(T_e\) (\unit{K}) describes the noise
 generated by a device relative to the noise generated by a resistor at
-room temperature. It is the noise power of the device in the absense of
+room temperature. It is the noise power of the device in the absence of
 noise at the input (input noise power is zero). It is defined as
 \begin{equation*}
     T_e = \frac{N_\mathrm{out}}{k_B B}
